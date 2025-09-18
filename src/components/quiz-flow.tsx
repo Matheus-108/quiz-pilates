@@ -82,9 +82,19 @@ export default function QuizFlow() {
   );
 
   const renderQuiz = () => (
-    <div key={currentStep} className="w-full animate-in fade-in-50 duration-500">
+    <div key={currentStep} className="w-full animate-in fade-in-50 duration-500 text-center">
+        {currentStep === 0 && (
+          <div className="mb-8">
+            <h1 className="text-3xl md:text-5xl font-black tracking-tight mb-4 leading-tight">
+              🤯 Queime a <span className="text-destructive">gordura</span> da menopausa com apenas <span className="text-destructive">10 minutos por dia...</span>
+            </h1>
+            <p className="text-lg md:text-xl text-muted-foreground">
+              👉 Responda o teste de <span className="font-bold text-foreground">2 minutos</span> e receba um <span className="font-bold text-foreground">plano personalizado!</span>
+            </p>
+          </div>
+        )}
         <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">{currentQuestion.questionText}</h2>
-        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center text-left">
             <div className="flex flex-col space-y-4">
               <RadioGroup
                 onValueChange={(value) => handleAnswerSelect(currentQuestion, value)}
