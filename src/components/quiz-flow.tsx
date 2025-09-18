@@ -33,15 +33,17 @@ export default function QuizFlow() {
   
   // Adjust question index based on intermediate screens
   let questionIndex;
-  if (currentStep < 2) {
+  if (currentStep < 1) {
     questionIndex = currentStep;
+  } else if (currentStep > 1 && currentStep < 3) {
+    questionIndex = currentStep -1;
   } else if (currentStep > 3 && currentStep < 6) {
     questionIndex = currentStep - 2;
   } else if (currentStep > 6) {
     questionIndex = currentStep - 3;
   } else {
     // For steps 2 and 3, it's either an intermediate screen or the question right after
-    questionIndex = currentStep - 1;
+    questionIndex = currentStep -1;
   }
   const currentQuestion = quizQuestions[questionIndex];
 
@@ -218,8 +220,8 @@ export default function QuizFlow() {
 
 
   const renderQuiz = () => {
-    // We don't want an image for questionIndex 1
-    const shouldShowImage = questionIndex !== 1;
+    // We don't want an image for questionIndex 1, 5
+    const shouldShowImage = questionIndex !== 1 && questionIndex !== 5;
     
     return (
         <div key={currentStep} className="w-full animate-in fade-in-50 duration-500 text-center">
@@ -323,20 +325,20 @@ export default function QuizFlow() {
     if (currentStep === 1) return renderStep2Screen();
     if (currentStep === 3) return renderStep4Screen();
     if (currentStep === 6) return renderStep8Screen();
-    if (currentQuestion.type === 'checkbox') return renderMultiSelectScreen();
+    if (currentQuestion && currentQuestion.type === 'checkbox') return renderMultiSelectScreen();
     return renderQuiz();
   }
 
 
   return (
     <div className="w-full max-w-6xl mx-auto flex flex-col items-center gap-6">
-      <div className="relative w-full h-20 flex items-center justify-center mt-4">
+      <div className="relative w-full h-20 flex items-center justify-center mt-8">
         {shouldShowBackButton && (
           <Button onClick={handleGoBack} variant="ghost" size="icon" className="absolute left-0">
             <ArrowLeft className="h-6 w-6" />
           </Button>
         )}
-        <Image src="https://i.imgur.com/aRAsQnJ.png" alt="MenoShape Quiz Logo" width={140} height={140} priority />
+        <Image src="https://i.imgur.com/aRAsQnJ.png" alt="MenoShape Quiz Logo" width={100} height={100} priority />
       </div>
       
       {shouldShowProgressBar && (
