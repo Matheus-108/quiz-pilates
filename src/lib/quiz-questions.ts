@@ -50,13 +50,13 @@ export const quizQuestions: QuizQuestion[] = [
   },
   {
     id: 'q2',
-    questionText: 'Qual é o seu nível de condicionamento físico atual?',
+    questionText: '🎯 Qual é o seu maior objetivo hoje?',
     answerKey: 'fitnessLevel',
     options: [
-      { text: 'Iniciante', value: 'Beginner' },
-      { text: 'Intermediário', value: 'Intermediate' },
-      { text: 'Avançado', value: 'Advanced' },
-      { text: 'Não faço exercícios', value: 'Not currently exercising' },
+      { text: '🔥 Perder peso', value: 'Lose weight' },
+      { text: '💪 Manter o peso e ficar em forma', value: 'Maintain weight and get in shape' },
+      { text: '😴 Melhorar o sono e reduzir o estresse', value: 'Improve sleep and reduce stress' },
+      { text: '🌟 Ter mais disposição e energia', value: 'Have more disposition and energy' },
     ],
     imagePlaceholder: smilingFitnessWoman,
   },
