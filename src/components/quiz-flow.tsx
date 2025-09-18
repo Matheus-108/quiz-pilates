@@ -27,16 +27,18 @@ export default function QuizFlow() {
 
   const [multiSelectAnswers, setMultiSelectAnswers] = useState<string[]>([]);
 
-  // We add 2 to totalQuestions to account for the new intermediate screens
-  const totalQuestions = quizQuestions.length + 2;
+  // We add 3 to totalQuestions to account for the new intermediate screens
+  const totalQuestions = quizQuestions.length + 3;
   const progressValue = isQuizStarted ? ((currentStep + 1) / totalQuestions) * 100 : 0;
   
   // Adjust question index based on intermediate screens
   let questionIndex;
   if (currentStep < 2) {
     questionIndex = currentStep;
-  } else if (currentStep > 3) {
+  } else if (currentStep > 3 && currentStep < 6) {
     questionIndex = currentStep - 2;
+  } else if (currentStep > 6) {
+    questionIndex = currentStep - 3;
   } else {
     // For steps 2 and 3, it's either an intermediate screen or the question right after
     questionIndex = currentStep - 1;
@@ -50,8 +52,9 @@ export default function QuizFlow() {
 
   const handleGoBack = () => {
     if (currentStep > 0) {
-      if (currentStep === 4 || currentStep === 5) { // Reset multi-select on back
-        setMultiSelectAnswers([]);
+      const prevQuestion = quizQuestions[questionIndex -1];
+      if (prevQuestion && prevQuestion.type === 'checkbox') {
+        setMultiSelectAnswers(answers[prevQuestion.answerKey]?.split(', ') || []);
       }
       setCurrentStep(currentStep - 1);
     }
@@ -167,6 +170,26 @@ export default function QuizFlow() {
     </div>
   );
 
+  const renderStep8Screen = () => (
+    <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
+       <div className="relative w-full h-72 rounded-lg overflow-hidden shadow-md mb-4">
+          <Image 
+            src="https://i.imgur.com/WroXAeh.png" 
+            alt="Mulher se exercitando"
+            fill
+            className="object-cover"
+          />
+        </div>
+      <p className="text-xl font-semibold text-foreground mb-6">
+        💡 78% das mulheres da sua idade sofrem com isso.<br/>
+        Quem age agora começa a ver resultados já nos primeiros dias!
+      </p>
+      <Button onClick={() => setCurrentStep(currentStep + 1)} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
+        Continuar
+      </Button>
+    </div>
+  );
+
   const renderMultiSelectScreen = () => (
     <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
       <h2 className="text-2xl md:text-3xl font-bold mb-2">{currentQuestion.questionText}</h2>
@@ -196,9 +219,8 @@ export default function QuizFlow() {
 
   const renderQuiz = () => {
     // Step 3 (currentStep === 2) is the second quiz question
-    const isSecondQuestion = currentStep === 2;
-    // Step 6 (currentStep === 6 because we have 2 extra screens before and one multi-select)
-    const isSixthQuestion = questionIndex === 5; // 'workoutLocation' is the 6th question in the array (index 5)
+    const isSecondQuestion = questionIndex === 1;
+    const isSixthQuestion = questionIndex === 5;
     
     return (
         <div key={currentStep} className="w-full animate-in fade-in-50 duration-500 text-center">
@@ -301,6 +323,7 @@ export default function QuizFlow() {
     if (showTransitionScreen) return renderTransitionScreen();
     if (currentStep === 1) return renderStep2Screen();
     if (currentStep === 3) return renderStep4Screen();
+    if (currentStep === 6) return renderStep8Screen();
     if (currentQuestion.type === 'checkbox') return renderMultiSelectScreen();
     return renderQuiz();
   }
@@ -329,3 +352,5 @@ export default function QuizFlow() {
     </div>
   );
 }
+
+    
