@@ -192,6 +192,8 @@ export default function QuizFlow() {
   const renderQuiz = () => {
     // Step 3 (currentStep === 2) is the second quiz question
     const isSecondQuestion = currentStep === 2;
+    // Step 6 (currentStep === 5) is the sixth quiz question
+    const isSixthQuestion = currentStep === 5;
 
     return (
         <div key={currentStep} className="w-full animate-in fade-in-50 duration-500 text-center">
@@ -208,7 +210,7 @@ export default function QuizFlow() {
             <div className="relative mb-8 text-center">
                 <h2 className="text-2xl md:text-3xl font-bold">{currentQuestion.questionText}</h2>
             </div>
-            <div className={`grid ${isSecondQuestion ? 'grid-cols-1' : 'grid-cols-2'} gap-2 items-center text-left max-w-2xl mx-auto`}>
+            <div className={`grid ${isSecondQuestion || isSixthQuestion ? 'grid-cols-1' : 'grid-cols-2'} gap-2 items-center text-left max-w-2xl mx-auto`}>
                 <div className="flex flex-col space-y-2">
                   <RadioGroup
                     onValueChange={(value) => handleAnswerSelect(currentQuestion, value)}
@@ -226,7 +228,7 @@ export default function QuizFlow() {
                     ))}
                   </RadioGroup>
                 </div>
-                {!isSecondQuestion && currentStep !== 4 && (
+                {!(isSecondQuestion || isSixthQuestion) && currentStep !== 4 && (
                     <div className="relative h-64 w-full rounded-lg overflow-hidden shadow-md">
                         <Image
                             src={currentQuestion.imagePlaceholder.imageUrl}
