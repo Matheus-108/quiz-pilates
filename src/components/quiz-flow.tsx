@@ -113,52 +113,59 @@ export default function QuizFlow() {
       </div>
   );
 
-  const renderQuiz = () => (
-    <div key={currentStep} className="w-full animate-in fade-in-50 duration-500 text-center">
-        {currentStep === 0 && (
-          <div className="mb-8">
-            <h1 className="text-3xl md:text-5xl font-black tracking-tight mb-4 leading-tight">
-              🤯 Queime a <span className="text-destructive">gordura</span> da menopausa com apenas <span className="text-destructive">10 minutos por dia...</span>
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground">
-              👉 Responda o teste de <span className="font-bold text-foreground">2 minutos</span> e receba um <span className="font-bold text-foreground">plano personalizado!</span>
-            </p>
-          </div>
-        )}
-        <div className="relative mb-8 text-center">
-            <h2 className="text-2xl md:text-3xl font-bold">{currentQuestion.questionText}</h2>
-        </div>
-        <div className="grid grid-cols-2 gap-2 items-center text-left">
-            <div className="flex flex-col space-y-2">
-              <RadioGroup
-                onValueChange={(value) => handleAnswerSelect(currentQuestion, value)}
-                className="space-y-2"
-              >
-                {currentQuestion.options.map((option) => (
-                  <Label
-                    key={option.value}
-                    htmlFor={option.value}
-                    className="flex items-center space-x-2 cursor-pointer rounded-lg border bg-card text-card-foreground shadow-sm p-3 hover:bg-accent/50 transition-colors"
+  const renderQuiz = () => {
+    // Etapa 3 (currentStep === 2) é a segunda pergunta do quiz
+    const isThirdStep = currentStep === 2;
+
+    return (
+        <div key={currentStep} className="w-full animate-in fade-in-50 duration-500 text-center">
+            {currentStep === 0 && (
+              <div className="mb-8">
+                <h1 className="text-3xl md:text-5xl font-black tracking-tight mb-4 leading-tight">
+                  🤯 Queime a <span className="text-destructive">gordura</span> da menopausa com apenas <span className="text-destructive">10 minutos por dia...</span>
+                </h1>
+                <p className="text-lg md:text-xl text-muted-foreground">
+                  👉 Responda o teste de <span className="font-bold text-foreground">2 minutos</span> e receba um <span className="font-bold text-foreground">plano personalizado!</span>
+                </p>
+              </div>
+            )}
+            <div className="relative mb-8 text-center">
+                <h2 className="text-2xl md:text-3xl font-bold">{currentQuestion.questionText}</h2>
+            </div>
+            <div className={`grid ${isThirdStep ? 'grid-cols-1' : 'grid-cols-2'} gap-2 items-center text-left max-w-2xl mx-auto`}>
+                <div className="flex flex-col space-y-2">
+                  <RadioGroup
+                    onValueChange={(value) => handleAnswerSelect(currentQuestion, value)}
+                    className="space-y-2"
                   >
-                    <RadioGroupItem value={option.value} id={option.value} />
-                    <span>{option.text}</span>
-                  </Label>
-                ))}
-              </RadioGroup>
-            </div>
-            <div className="relative h-64 w-full rounded-lg overflow-hidden shadow-md">
-                <Image
-                    src={currentQuestion.imagePlaceholder.imageUrl}
-                    alt={currentQuestion.imagePlaceholder.description}
-                    fill
-                    className="object-contain"
-                    data-ai-hint={currentQuestion.imagePlaceholder.imageHint}
-                    sizes="50vw"
-                />
+                    {currentQuestion.options.map((option) => (
+                      <Label
+                        key={option.value}
+                        htmlFor={option.value}
+                        className="flex items-center space-x-2 cursor-pointer rounded-lg border bg-card text-card-foreground shadow-sm p-3 hover:bg-accent/50 transition-colors"
+                      >
+                        <RadioGroupItem value={option.value} id={option.value} />
+                        <span>{option.text}</span>
+                      </Label>
+                    ))}
+                  </RadioGroup>
+                </div>
+                {!isThirdStep && (
+                    <div className="relative h-64 w-full rounded-lg overflow-hidden shadow-md">
+                        <Image
+                            src={currentQuestion.imagePlaceholder.imageUrl}
+                            alt={currentQuestion.imagePlaceholder.description}
+                            fill
+                            className="object-contain"
+                            data-ai-hint={currentQuestion.imagePlaceholder.imageHint}
+                            sizes="50vw"
+                        />
+                    </div>
+                )}
             </div>
         </div>
-    </div>
-  );
+    );
+  };
 
   const renderTransitionScreen = () => (
     <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
