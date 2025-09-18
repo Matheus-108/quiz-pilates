@@ -60,7 +60,7 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: 'q2',
     questionText: '🎯 Qual é o seu maior objetivo hoje?',
-    answerKey: 'fitnessLevel',
+    answerKey: 'mainGoal',
     type: 'radio',
     options: [
       { text: '🔥 Perder peso', value: 'Lose weight' },
@@ -121,7 +121,7 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: 'q6',
     questionText: '🤩 Qual desses corpos você mais deseja?',
-    answerKey: 'workoutLocation',
+    answerKey: 'fitnessLevel',
     type: 'radio',
     options: [
       { text: 'Em forma e saudável', value: 'Fit and healthy' },
@@ -157,19 +157,6 @@ export const quizQuestions: QuizQuestion[] = [
       { text: '71kg a 80kg', value: '71kg to 80kg' },
       { text: '81kg a 90kg', value: '81kg to 90kg' },
       { text: 'Mais de 100kg', value: 'More than 100kg' },
-    ],
-    imagePlaceholder: smilingFitnessWoman,
-  },
-  {
-    id: 'q9',
-    questionText: 'Você tem alguma restrição alimentar?',
-    answerKey: 'dietaryRestrictions',
-    type: 'radio',
-    options: [
-      { text: 'Nenhuma', value: 'None' },
-      { text: 'Vegetariana/Vegana', value: 'Vegetarian/Vegan' },
-      { text: 'Sem glúten', value: 'Gluten-free' },
-      { text: 'Sem lactose', value: 'Lactose-free' },
     ],
     imagePlaceholder: smilingFitnessWoman,
   },

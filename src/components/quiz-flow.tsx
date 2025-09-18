@@ -27,8 +27,8 @@ export default function QuizFlow() {
 
   const [multiSelectAnswers, setMultiSelectAnswers] = useState<string[]>([]);
 
-  // We add 3 to totalQuestions to account for the new intermediate screens
-  const totalQuestions = quizQuestions.length + 3;
+  // We add 4 to totalQuestions to account for the new intermediate screens
+  const totalQuestions = quizQuestions.length + 4;
   const progressValue = isQuizStarted ? ((currentStep + 1) / totalQuestions) * 100 : 0;
   
   // Adjust question index based on intermediate screens
@@ -36,6 +36,7 @@ export default function QuizFlow() {
   if (currentStep > 1) questionIndex--; // Account for step 2 screen
   if (currentStep > 3) questionIndex--; // Account for step 4 screen
   if (currentStep > 7) questionIndex--; // Account for step 8 screen
+  if (currentStep > 11) questionIndex--; // Account for step 12 screen
   
   const currentQuestion = quizQuestions[questionIndex];
 
@@ -51,6 +52,7 @@ export default function QuizFlow() {
       if (prevQuestionIndex > 1) prevQuestionIndex--;
       if (prevQuestionIndex > 3) prevQuestionIndex--;
       if (prevQuestionIndex > 7) prevQuestionIndex--;
+      if (prevQuestionIndex > 11) prevQuestionIndex--;
       
       const prevQuestion = quizQuestions[prevQuestionIndex];
       if (prevQuestion && prevQuestion.type === 'checkbox') {
@@ -190,6 +192,26 @@ export default function QuizFlow() {
     </div>
   );
 
+  const renderStep12Screen = () => (
+    <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
+       <div className="relative w-full h-72 rounded-lg overflow-hidden shadow-md mb-4">
+          <Image 
+            src="https://i.imgur.com/woZ32hI.png" 
+            alt="Mulher praticando Pilates Asiática"
+            fill
+            className="object-cover"
+          />
+        </div>
+      <p className="text-xl font-semibold text-foreground mb-6">
+      ✨ Seu corpo pode começar a mudar em apenas 3 dias com a Pilates Asiática.<br />
+      Se você começar a fazer a Pilates Asiática hoje você ficará mais saudável e jovem!
+      </p>
+      <Button onClick={() => setCurrentStep(currentStep + 1)} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
+        Continuar
+      </Button>
+    </div>
+  );
+
   const renderMultiSelectScreen = () => (
     <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
       <h2 className="text-2xl md:text-3xl font-bold mb-2">{currentQuestion.questionText}</h2>
@@ -219,7 +241,7 @@ export default function QuizFlow() {
 
   const renderQuiz = () => {
     // We don't want an image for questionIndex 1, 5, 6, 7, 8
-    const shouldShowImage = questionIndex !== 1 && questionIndex !== 5 && questionIndex !== 6 && questionIndex !== 7 && questionIndex !== 8;
+    const shouldShowImage = ![1, 5, 6, 7, 8, 9].includes(questionIndex);
     
     return (
         <div key={currentStep} className="w-full animate-in fade-in-50 duration-500 text-center">
@@ -323,6 +345,7 @@ export default function QuizFlow() {
     if (currentStep === 1) return renderStep2Screen();
     if (currentStep === 3) return renderStep4Screen();
     if (currentStep === 7) return renderStep8Screen();
+    if (currentStep === 11) return renderStep12Screen();
     if (currentQuestion && currentQuestion.type === 'checkbox') return renderMultiSelectScreen();
     return renderQuiz();
   }
