@@ -5,6 +5,12 @@
       "description": "A smiling fitness woman in workout clothes.",
       "imageUrl": "https://i.imgur.com/uR2Z0U5.png",
       "imageHint": "fitness woman"
+    },
+    {
+      "id": "body-goals-1",
+      "description": "Four images showing different female body types: fit and healthy, well-defined curves, slim, and normal.",
+      "imageUrl": "https://i.imgur.com/vHggY8i.png",
+      "imageHint": "body types"
     }
   ]
 }

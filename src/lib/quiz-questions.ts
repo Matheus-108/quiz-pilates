@@ -37,6 +37,11 @@ if (!smilingFitnessWoman) {
   throw new Error("Placeholder image 'smiling-fitness-woman-1' not found.");
 }
 
+const bodyGoalsWoman = PlaceHolderImages.find(img => img.id === 'body-goals-1');
+if (!bodyGoalsWoman) {
+    throw new Error("Placeholder image 'body-goals-1' not found.");
+}
+
 
 export const quizQuestions: QuizQuestion[] = [
   {
@@ -115,16 +120,17 @@ export const quizQuestions: QuizQuestion[] = [
   },
   {
     id: 'q6',
-    questionText: 'Onde você prefere se exercitar?',
+    questionText: '🤩 Qual desses corpos você mais deseja?',
     answerKey: 'workoutLocation',
     type: 'radio',
     options: [
-      { text: 'Em casa', value: 'At home' },
-      { text: 'Na academia', value: 'At the gym' },
-      { text: 'Ao ar livre', value: 'Outdoors' },
-      { text: 'Uma mistura', value: 'A mix' },
+      { text: 'Em forma e saudável', value: 'Fit and healthy' },
+      { text: 'Curvas bem definidas', value: 'Well-defined curves' },
+      { text: 'Magra', value: 'Slim' },
+      { text: 'Normal', value: 'Normal' },
+      { text: 'Estou bem assim', value: 'I\'m fine like this' }
     ],
-    imagePlaceholder: smilingFitnessWoman,
+    imagePlaceholder: bodyGoalsWoman,
   },
   {
     id: 'q7',
