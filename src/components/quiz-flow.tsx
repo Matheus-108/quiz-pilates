@@ -20,6 +20,7 @@ export default function QuizFlow() {
   const [plan, setPlan] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isQuizStarted, setIsQuizStarted] = useState(false);
+  const [showTransitionScreen, setShowTransitionScreen] = useState(false);
   const { toast } = useToast();
 
   const totalQuestions = quizQuestions.length;
@@ -37,7 +38,8 @@ export default function QuizFlow() {
     if (currentStep < totalQuestions - 1) {
       setCurrentStep(currentStep + 1);
     } else {
-      generatePlan(newAnswers as PersonalizedFitnessPlanInput);
+      // Last question answered, show transition screen
+      setShowTransitionScreen(true);
     }
   };
   
@@ -48,9 +50,10 @@ export default function QuizFlow() {
     }
   };
 
-  const generatePlan = async (finalAnswers: PersonalizedFitnessPlanInput) => {
+  const generatePlan = async () => {
+    setShowTransitionScreen(false); // Hide transition screen
     setIsLoading(true);
-    const result = await generatePlanAction(finalAnswers);
+    const result = await generatePlanAction(answers as PersonalizedFitnessPlanInput);
     setIsLoading(false);
 
     if (result.success && result.plan) {
@@ -61,6 +64,7 @@ export default function QuizFlow() {
         title: 'Erro ao gerar plano',
         description: result.error || 'Não foi possível gerar seu plano. Por favor, tente novamente.',
       });
+      // Reset state to start over
       setCurrentStep(0);
       setAnswers({});
       setIsQuizStarted(false);
@@ -94,11 +98,11 @@ export default function QuizFlow() {
           </div>
         )}
         <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">{currentQuestion.questionText}</h2>
-        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center text-left">
-            <div className="flex flex-col space-y-4">
+        <div className="grid md:grid-cols-2 gap-4 items-center text-left">
+            <div className="flex flex-col space-y-3">
               <RadioGroup
                 onValueChange={(value) => handleAnswerSelect(currentQuestion, value)}
-                className="space-y-4"
+                className="space-y-3"
               >
                 {currentQuestion.options.map((option) => (
                   <Label
@@ -126,6 +130,24 @@ export default function QuizFlow() {
     </div>
   );
 
+  const renderTransitionScreen = () => (
+    <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
+      <Button variant="destructive" className="mb-4 bg-[#E5398D] hover:bg-[#c22a7a] text-white font-bold">Atenção meninas</Button>
+      <div className="relative w-full h-72 rounded-lg overflow-hidden shadow-md mb-4">
+        <Image 
+          src="https://i.imgur.com/Vv5qIiR.png" 
+          alt="Mulheres felizes"
+          fill
+          className="object-cover"
+        />
+      </div>
+      <p className="text-xl font-semibold text-foreground mb-6">Milhares de mulheres ja eliminaram a gordura da menopausa, agora é sua vez!</p>
+      <Button onClick={() => generatePlan()} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
+        Eu também consigo!
+      </Button>
+    </div>
+  );
+
   const renderLoading = () => (
     <div className="text-center flex flex-col items-center justify-center space-y-4 py-20 animate-in fade-in duration-500">
       <Loader2 className="h-16 w-16 animate-spin text-primary" />
@@ -142,28 +164,31 @@ export default function QuizFlow() {
             <div className='bg-white/50 rounded-lg p-6 border'>
               {plan && <MarkdownRenderer content={plan} />}
             </div>
-            <Button onClick={() => { setPlan(null); setAnswers({}); setCurrentStep(0); setIsQuizStarted(false); }} className="mt-8">
+            <Button onClick={() => { setPlan(null); setAnswers({}); setCurrentStep(0); setIsQuizStarted(false); setShowTransitionScreen(false); }} className="mt-8">
                 Refazer Quiz
             </Button>
         </CardContent>
     </Card>
   );
+  
+  const shouldShowProgressBar = (isQuizStarted || plan || showTransitionScreen) && !isLoading;
 
   return (
     <div className="w-full max-w-6xl mx-auto flex flex-col items-center gap-6">
       <div className="h-20 flex items-center">
         <Image src="https://i.imgur.com/7W5p2S8.png" alt="Wase Pilates Logo" width={140} height={140} priority />
       </div>
-
-      {(isQuizStarted || plan) && !isLoading && (
+      
+      {shouldShowProgressBar && (
         <div className="w-full px-4 h-2 my-2">
             <Progress value={plan ? 100 : progressValue} className="h-2 w-full [&>div]:bg-primary" />
         </div>
       )}
 
       <div className="w-full flex-grow flex items-center justify-center mt-4 min-h-[60vh]">
-        {!isQuizStarted && !isLoading && !plan && renderInitialScreen()}
-        {isQuizStarted && !isLoading && !plan && renderQuiz()}
+        {!isQuizStarted && !plan && !isLoading && !showTransitionScreen && renderInitialScreen()}
+        {isQuizStarted && !plan && !isLoading && !showTransitionScreen && renderQuiz()}
+        {showTransitionScreen && !isLoading && renderTransitionScreen()}
         {isLoading && renderLoading()}
         {plan && !isLoading && renderPlan()}
       </div>
