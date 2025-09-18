@@ -21,7 +21,6 @@ export interface QuizQuestion {
     | 'workoutTypes'
     | 'dietExperience'
     | 'dietaryRestrictions'
-    | 'sleepQuality'
     | 'energyLevel'
     | 'motivationLevel'
     | 'healthConditions'
@@ -156,19 +155,6 @@ export const quizQuestions: QuizQuestion[] = [
       { text: '71kg a 80kg', value: '71kg to 80kg' },
       { text: '81kg a 90kg', value: '81kg to 90kg' },
       { text: 'Mais de 100kg', value: 'More than 100kg' },
-    ],
-    imagePlaceholder: smilingFitnessWoman,
-  },
-  {
-    id: 'q11',
-    questionText: 'Como está a qualidade do seu sono?',
-    answerKey: 'sleepQuality',
-    type: 'radio',
-    options: [
-      { text: 'Ótima, durmo bem', value: 'Great, I sleep well' },
-      { text: 'Razoável, mas poderia ser melhor', value: 'Fair, but could be better' },
-      { text: 'Ruim, tenho dificuldade para dormir', value: 'Poor, I have trouble sleeping' },
-      { text: 'Péssima, sofro de insônia', value: 'Terrible, I suffer from insomnia' },
     ],
     imagePlaceholder: smilingFitnessWoman,
   },

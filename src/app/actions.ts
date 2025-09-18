@@ -16,7 +16,6 @@ const AnswersSchema = z.object({
   workoutTypes: z.string(),
   dietExperience: z.string(),
   dietaryRestrictions: z.string(),
-  sleepQuality: z.string(),
   energyLevel: z.string(),
   motivationLevel: z.string(),
   healthConditions: z.string(),

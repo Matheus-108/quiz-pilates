@@ -22,13 +22,13 @@ export default function QuizFlow() {
   const [plan, setPlan] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isQuizStarted, setIsQuizStarted] = useState(false);
-  const [showTransitionScreen, setShowTransitionScreen] = useState(false);
+  const [showFinalStepScreen, setShowFinalStepScreen] = useState(false);
   const { toast } = useToast();
 
   const [multiSelectAnswers, setMultiSelectAnswers] = useState<string[]>([]);
 
-  // We add 5 to totalQuestions to account for the new intermediate screens
-  const totalQuestions = quizQuestions.length + 5;
+  // We add 4 to totalQuestions to account for the new intermediate/final screens
+  const totalQuestions = quizQuestions.length + 4;
   const progressValue = isQuizStarted ? ((currentStep + 1) / totalQuestions) * 100 : 0;
   
   // Adjust question index based on intermediate screens
@@ -72,7 +72,7 @@ export default function QuizFlow() {
       setCurrentStep(currentStep + 1);
     } else {
       // Last question answered, show transition screen
-      setShowTransitionScreen(true);
+      setShowFinalStepScreen(true);
     }
   };
   
@@ -97,12 +97,12 @@ export default function QuizFlow() {
     if (currentStep < totalQuestions - 1) {
       setCurrentStep(currentStep + 1);
     } else {
-      setShowTransitionScreen(true);
+      setShowFinalStepScreen(true);
     }
   };
 
   const generatePlan = async () => {
-    setShowTransitionScreen(false); // Hide transition screen
+    setShowFinalStepScreen(false); // Hide transition screen
     setIsLoading(true);
     const result = await generatePlanAction(answers as PersonalizedFitnessPlanInput);
     setIsLoading(false);
@@ -317,20 +317,16 @@ export default function QuizFlow() {
     );
   };
 
-  const renderTransitionScreen = () => (
+  const renderFinalStepScreen = () => (
     <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
-      <Button variant="destructive" className="mb-4 bg-[#E5398D] hover:bg-[#c22a7a] text-white font-bold">Atenção meninas</Button>
-      <div className="relative w-full h-72 rounded-lg overflow-hidden shadow-md mb-4">
-        <Image 
-          src="https://i.imgur.com/Vv5qIiR.png" 
-          alt="Mulheres felizes"
-          fill
-          className="object-cover"
-        />
-      </div>
-      <p className="text-xl font-semibold text-foreground mb-6">Milhares de mulheres ja eliminaram a gordura da menopausa, agora é sua vez!</p>
+      <h2 className="text-2xl md:text-3xl font-bold mb-4">🌸 Seu plano personalizado já está pronto!</h2>
+      <p className="text-lg text-muted-foreground mb-8">
+        Ele foi desenvolvido a partir das suas respostas e está 100% adaptado ao seu corpo, à sua rotina e às suas dores.
+        <br/><br/>
+        👉 Clique no botão abaixo e comece a fazer a Pilates Asiática ainda hoje!
+      </p>
       <Button onClick={() => generatePlan()} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
-        Eu também consigo!
+      ✅ Ver meu plano personalizado!
       </Button>
     </div>
   );
@@ -351,21 +347,21 @@ export default function QuizFlow() {
             <div className='bg-white/50 rounded-lg p-6 border'>
               {plan && <MarkdownRenderer content={plan} />}
             </div>
-            <Button onClick={() => { setPlan(null); setAnswers({}); setCurrentStep(0); setIsQuizStarted(false); setShowTransitionScreen(false); setMultiSelectAnswers([]); }} className="mt-8">
+            <Button onClick={() => { setPlan(null); setAnswers({}); setCurrentStep(0); setIsQuizStarted(false); setShowFinalStepScreen(false); setMultiSelectAnswers([]); }} className="mt-8">
                 Refazer Quiz
             </Button>
         </CardContent>
     </Card>
   );
   
-  const shouldShowProgressBar = (isQuizStarted || plan || showTransitionScreen) && !isLoading;
-  const shouldShowBackButton = isQuizStarted && currentStep > 0 && !plan && !isLoading && !showTransitionScreen;
+  const shouldShowProgressBar = (isQuizStarted || plan || showFinalStepScreen) && !isLoading;
+  const shouldShowBackButton = isQuizStarted && currentStep > 0 && !plan && !isLoading && !showFinalStepScreen;
   
   const renderContent = () => {
     if (!isQuizStarted) return renderInitialScreen();
     if (isLoading) return renderLoading();
     if (plan) return renderPlan();
-    if (showTransitionScreen) return renderTransitionScreen();
+    if (showFinalStepScreen) return renderFinalStepScreen();
     if (currentStep === 1) return renderStep2Screen();
     if (currentStep === 3) return renderStep4Screen();
     if (currentStep === 7) return renderStep8Screen();

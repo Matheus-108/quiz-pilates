@@ -21,7 +21,6 @@ const PersonalizedFitnessPlanInputSchema = z.object({
   workoutTypes: z.string().describe('The types of exercise the user enjoys.'),
   dietExperience: z.string().describe('The user\'s experience with diets.'),
   dietaryRestrictions: z.string().describe('Any dietary restrictions the user has.'),
-  sleepQuality: z.string().describe('The quality of the user\'s sleep.'),
   energyLevel: z.string().describe('The user\'s energy level during the day.'),
   motivationLevel: z.string().describe('The user\'s motivation level to start.'),
   healthConditions: z.string().describe('Any health conditions or injuries the user has.'),
@@ -56,7 +55,6 @@ const prompt = ai.definePrompt({
 - **Preferred Workout Types:** {{{workoutTypes}}}
 - **Experience with Diets:** {{{dietExperience}}}
 - **Dietary Restrictions:** {{{dietaryRestrictions}}}
-- **Sleep Quality:** {{{sleepQuality}}}
 - **Daily Energy Level:** {{{energyLevel}}}
 - **Motivation Level:** {{{motivationLevel}}}
 - **Health Conditions/Injuries:** {{{healthConditions}}}
