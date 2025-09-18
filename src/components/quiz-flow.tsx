@@ -226,7 +226,7 @@ export default function QuizFlow() {
                     ))}
                   </RadioGroup>
                 </div>
-                {!isSecondQuestion && (
+                {!isSecondQuestion && currentStep !== 4 && (
                     <div className="relative h-64 w-full rounded-lg overflow-hidden shadow-md">
                         <Image
                             src={currentQuestion.imagePlaceholder.imageUrl}
@@ -322,5 +322,3 @@ export default function QuizFlow() {
     </div>
   );
 }
-
-    
