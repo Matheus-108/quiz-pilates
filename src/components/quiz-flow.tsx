@@ -222,7 +222,7 @@ export default function QuizFlow() {
             <ArrowLeft className="h-6 w-6" />
           </Button>
         )}
-        <Image src="https://i.imgur.com/7W5p2S8.png" alt="Wase Pilates Logo" width={140} height={140} priority />
+        <Image src="https://i.imgur.com/aRAsQnJ.png" alt="MenoShape Quiz Logo" width={140} height={140} priority />
       </div>
       
       {shouldShowProgressBar && (
