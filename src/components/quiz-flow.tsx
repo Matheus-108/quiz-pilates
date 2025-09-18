@@ -23,9 +23,13 @@ export default function QuizFlow() {
   const [showTransitionScreen, setShowTransitionScreen] = useState(false);
   const { toast } = useToast();
 
-  const totalQuestions = quizQuestions.length;
+  // We add 1 to totalQuestions to account for the new intermediate screen
+  const totalQuestions = quizQuestions.length + 1;
   const progressValue = isQuizStarted ? ((currentStep + 1) / totalQuestions) * 100 : 0;
-  const currentQuestion = quizQuestions[currentStep];
+  // We subtract 1 from currentStep for questions after the intermediate screen
+  const questionIndex = currentStep > 1 ? currentStep - 1 : currentStep;
+  const currentQuestion = quizQuestions[questionIndex];
+
 
   const handleStartQuiz = () => {
     setIsQuizStarted(true);
@@ -89,6 +93,24 @@ export default function QuizFlow() {
           INICIAR TESTE
         </Button>
     </div>
+  );
+  
+  const renderStep2Screen = () => (
+      <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
+        <Button variant="destructive" className="mb-4 bg-[#E5398D] hover:bg-[#c22a7a] text-white font-bold">Atenção meninas</Button>
+        <div className="relative w-full h-72 rounded-lg overflow-hidden shadow-md mb-4">
+          <Image 
+            src="https://i.imgur.com/Vv5qIiR.png" 
+            alt="Mulheres felizes"
+            fill
+            className="object-cover"
+          />
+        </div>
+        <p className="text-xl font-semibold text-foreground mb-6">Milhares de mulheres ja eliminaram a gordura da menopausa, agora é sua vez!</p>
+        <Button onClick={() => setCurrentStep(currentStep + 1)} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
+          Agora é sua vez
+        </Button>
+      </div>
   );
 
   const renderQuiz = () => (
@@ -181,6 +203,16 @@ export default function QuizFlow() {
   
   const shouldShowProgressBar = (isQuizStarted || plan || showTransitionScreen) && !isLoading;
   const shouldShowBackButton = isQuizStarted && currentStep > 0 && !plan && !isLoading && !showTransitionScreen;
+  
+  const renderContent = () => {
+    if (!isQuizStarted) return renderInitialScreen();
+    if (isLoading) return renderLoading();
+    if (plan) return renderPlan();
+    if (showTransitionScreen) return renderTransitionScreen();
+    if (currentStep === 1) return renderStep2Screen();
+    return renderQuiz();
+  }
+
 
   return (
     <div className="w-full max-w-6xl mx-auto flex flex-col items-center gap-6">
@@ -200,11 +232,7 @@ export default function QuizFlow() {
       )}
 
       <div className="w-full flex-grow flex items-center justify-center mt-4 min-h-[60vh]">
-        {!isQuizStarted && !plan && !isLoading && !showTransitionScreen && renderInitialScreen()}
-        {isQuizStarted && !plan && !isLoading && !showTransitionScreen && renderQuiz()}
-        {showTransitionScreen && !isLoading && renderTransitionScreen()}
-        {isLoading && renderLoading()}
-        {plan && !isLoading && renderPlan()}
+        {renderContent()}
       </div>
     </div>
   );
