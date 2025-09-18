@@ -216,7 +216,7 @@ export default function QuizFlow() {
 
   return (
     <div className="w-full max-w-6xl mx-auto flex flex-col items-center gap-6">
-      <div className="relative w-full h-20 flex items-center justify-center">
+      <div className="relative w-full h-20 flex items-center justify-center mt-4">
         {shouldShowBackButton && (
           <Button onClick={handleGoBack} variant="ghost" size="icon" className="absolute left-0">
             <ArrowLeft className="h-6 w-6" />
