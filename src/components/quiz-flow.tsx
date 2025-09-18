@@ -27,8 +27,8 @@ export default function QuizFlow() {
 
   const [multiSelectAnswers, setMultiSelectAnswers] = useState<string[]>([]);
 
-  // We add 4 to totalQuestions to account for the new intermediate screens
-  const totalQuestions = quizQuestions.length + 4;
+  // We add 5 to totalQuestions to account for the new intermediate screens
+  const totalQuestions = quizQuestions.length + 5;
   const progressValue = isQuizStarted ? ((currentStep + 1) / totalQuestions) * 100 : 0;
   
   // Adjust question index based on intermediate screens
@@ -36,6 +36,7 @@ export default function QuizFlow() {
   if (currentStep > 1) questionIndex--; // Account for step 2 screen
   if (currentStep > 3) questionIndex--; // Account for step 4 screen
   if (currentStep > 7) questionIndex--; // Account for step 8 screen
+  if (currentStep > 9) questionIndex--; // Account for step 10 screen
   if (currentStep > 11) questionIndex--; // Account for step 12 screen
   
   const currentQuestion = quizQuestions[questionIndex];
@@ -52,6 +53,7 @@ export default function QuizFlow() {
       if (prevQuestionIndex > 1) prevQuestionIndex--;
       if (prevQuestionIndex > 3) prevQuestionIndex--;
       if (prevQuestionIndex > 7) prevQuestionIndex--;
+      if (prevQuestionIndex > 9) prevQuestionIndex--;
       if (prevQuestionIndex > 11) prevQuestionIndex--;
       
       const prevQuestion = quizQuestions[prevQuestionIndex];
@@ -191,6 +193,27 @@ export default function QuizFlow() {
       </Button>
     </div>
   );
+  
+  const renderStep10Screen = () => (
+    <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
+       <div className="relative w-full h-72 rounded-lg overflow-hidden shadow-md mb-4">
+          <Image 
+            src="https://i.imgur.com/cGbt7Ct.png" 
+            alt="Mulher preocupada"
+            fill
+            className="object-cover"
+          />
+        </div>
+      <p className="text-xl font-semibold text-foreground mb-6">
+        ⚠️ Se você não agir agora, sua saúde e bem-estar podem piorar rapidamente!<br/>
+        A boa notícia é: ainda dá tempo de escolher o caminho certo.
+      </p>
+      <Button onClick={() => setCurrentStep(currentStep + 1)} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
+        Continuar
+      </Button>
+    </div>
+  );
+
 
   const renderStep12Screen = () => (
     <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
@@ -345,6 +368,7 @@ export default function QuizFlow() {
     if (currentStep === 1) return renderStep2Screen();
     if (currentStep === 3) return renderStep4Screen();
     if (currentStep === 7) return renderStep8Screen();
+    if (currentStep === 9) return renderStep10Screen();
     if (currentStep === 11) return renderStep12Screen();
     if (currentQuestion && currentQuestion.type === 'checkbox') return renderMultiSelectScreen();
     return renderQuiz();

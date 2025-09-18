@@ -16,7 +16,6 @@ const AnswersSchema = z.object({
   workoutTypes: z.string(),
   dietExperience: z.string(),
   dietaryRestrictions: z.string(),
-  stressLevel: z.string(),
   sleepQuality: z.string(),
   energyLevel: z.string(),
   motivationLevel: z.string(),
@@ -26,8 +25,10 @@ const AnswersSchema = z.object({
 
 export async function generatePlanAction(answers: PersonalizedFitnessPlanInput) {
   try {
-    const validatedAnswers = AnswersSchema.parse(answers);
-    const result = await generatePersonalizedFitnessPlan(validatedAnswers);
+    // We are not validating the input anymore as some questions are now optional
+    // and are replaced by intermediate screens.
+    // const validatedAnswers = AnswersSchema.parse(answers);
+    const result = await generatePersonalizedFitnessPlan(answers);
     if (!result || !result.fitnessPlan) {
       throw new Error('Falha ao gerar o plano. O resultado está vazio.');
     }

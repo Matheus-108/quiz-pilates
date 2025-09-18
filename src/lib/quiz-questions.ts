@@ -21,7 +21,6 @@ export interface QuizQuestion {
     | 'workoutTypes'
     | 'dietExperience'
     | 'dietaryRestrictions'
-    | 'stressLevel'
     | 'sleepQuality'
     | 'energyLevel'
     | 'motivationLevel'
@@ -157,19 +156,6 @@ export const quizQuestions: QuizQuestion[] = [
       { text: '71kg a 80kg', value: '71kg to 80kg' },
       { text: '81kg a 90kg', value: '81kg to 90kg' },
       { text: 'Mais de 100kg', value: 'More than 100kg' },
-    ],
-    imagePlaceholder: smilingFitnessWoman,
-  },
-  {
-    id: 'q10',
-    questionText: 'Como você descreveria seu nível de estresse diário?',
-    answerKey: 'stressLevel',
-    type: 'radio',
-    options: [
-      { text: 'Baixo', value: 'Low' },
-      { text: 'Moderado', value: 'Moderate' },
-      { text: 'Alto', value: 'High' },
-      { text: 'Muito alto', value: 'Very high' },
     ],
     imagePlaceholder: smilingFitnessWoman,
   },
