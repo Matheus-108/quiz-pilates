@@ -26,7 +26,10 @@ export interface QuizQuestion {
     | 'energyLevel'
     | 'motivationLevel'
     | 'healthConditions'
-    | 'commitment';
+    | 'commitment'
+    | 'menopauseSymptoms'; // New key for the multi-select question
+  type?: 'radio' | 'checkbox';
+  questionSubtitle?: string;
 }
 
 const smilingFitnessWoman = PlaceHolderImages.find(img => img.id === 'smiling-fitness-woman-1');
@@ -40,6 +43,7 @@ export const quizQuestions: QuizQuestion[] = [
     id: 'q1',
     questionText: 'Qual sua idade?',
     answerKey: 'ageRange',
+    type: 'radio',
     options: [
       { text: '39-45', value: '39-45' },
       { text: '46-50', value: '46-50' },
@@ -52,6 +56,7 @@ export const quizQuestions: QuizQuestion[] = [
     id: 'q2',
     questionText: '🎯 Qual é o seu maior objetivo hoje?',
     answerKey: 'fitnessLevel',
+    type: 'radio',
     options: [
       { text: '🔥 Perder peso', value: 'Lose weight' },
       { text: '💪 Manter o peso e ficar em forma', value: 'Maintain weight and get in shape' },
@@ -64,6 +69,7 @@ export const quizQuestions: QuizQuestion[] = [
     id: 'q3',
     questionText: 'Quanto tempo você pode dedicar aos exercícios por dia?',
     answerKey: 'timePerDay',
+    type: 'radio',
     options: [
       { text: 'Menos de 10 minutos', value: 'Less than 10 minutes' },
       { text: '10-20 minutos', value: '10-20 minutes' },
@@ -73,9 +79,27 @@ export const quizQuestions: QuizQuestion[] = [
     imagePlaceholder: smilingFitnessWoman,
   },
   {
+    id: 'q4-multiselect',
+    questionText: '🤔 Quais desses sintomas da menopausa você sente?',
+    questionSubtitle: 'Selecione as opções que você mais se identifica:',
+    answerKey: 'menopauseSymptoms',
+    type: 'checkbox',
+    options: [
+        { text: '🔥 Ondas de calor', value: 'Hot flashes' },
+        { text: '😴 Problemas de sono', value: 'Sleep problems' },
+        { text: '😩 Falta de energia', value: 'Lack of energy' },
+        { text: '😵 Mudanças de humor', value: 'Mood swings' },
+        { text: '🤕 Dor nas articulações', value: 'Joint pain' },
+        { text: '📈 Ganho de peso', value: 'Weight gain' },
+        { text: 'Outros', value: 'Others' }
+    ],
+    imagePlaceholder: smilingFitnessWoman, // Placeholder, not used for checkbox type
+  },
+  {
     id: 'q4',
     questionText: 'Qual é o seu principal objetivo de fitness?',
     answerKey: 'mainGoal',
+    type: 'radio',
     options: [
       { text: 'Perder peso', value: 'Lose weight' },
       { text: 'Tonificar o corpo', value: 'Tone body' },
@@ -88,6 +112,7 @@ export const quizQuestions: QuizQuestion[] = [
     id: 'q5',
     questionText: 'Quais áreas do corpo você mais gostaria de focar?',
     answerKey: 'problemAreas',
+    type: 'radio',
     options: [
       { text: 'Barriga', value: 'Belly' },
       { text: 'Pernas e glúteos', value: 'Legs and glutes' },
@@ -100,6 +125,7 @@ export const quizQuestions: QuizQuestion[] = [
     id: 'q6',
     questionText: 'Onde você prefere se exercitar?',
     answerKey: 'workoutLocation',
+    type: 'radio',
     options: [
       { text: 'Em casa', value: 'At home' },
       { text: 'Na academia', value: 'At the gym' },
@@ -112,6 +138,7 @@ export const quizQuestions: QuizQuestion[] = [
     id: 'q7',
     questionText: 'Que tipo de exercício você mais gosta?',
     answerKey: 'workoutTypes',
+    type: 'radio',
     options: [
       { text: 'Cardio (corrida, dança)', value: 'Cardio' },
       { text: 'Força (musculação, pilates)', value: 'Strength' },
@@ -124,6 +151,7 @@ export const quizQuestions: QuizQuestion[] = [
     id: 'q8',
     questionText: 'Qual é a sua experiência com dietas?',
     answerKey: 'dietExperience',
+    type: 'radio',
     options: [
       { text: 'Nenhuma, preciso de ajuda', value: 'None, I need help' },
       { text: 'Já tentei algumas, sem sucesso', value: 'Tried a few without success' },
@@ -136,6 +164,7 @@ export const quizQuestions: QuizQuestion[] = [
     id: 'q9',
     questionText: 'Você tem alguma restrição alimentar?',
     answerKey: 'dietaryRestrictions',
+    type: 'radio',
     options: [
       { text: 'Nenhuma', value: 'None' },
       { text: 'Vegetariana/Vegana', value: 'Vegetarian/Vegan' },
@@ -148,6 +177,7 @@ export const quizQuestions: QuizQuestion[] = [
     id: 'q10',
     questionText: 'Como você descreveria seu nível de estresse diário?',
     answerKey: 'stressLevel',
+    type: 'radio',
     options: [
       { text: 'Baixo', value: 'Low' },
       { text: 'Moderado', value: 'Moderate' },
@@ -160,6 +190,7 @@ export const quizQuestions: QuizQuestion[] = [
     id: 'q11',
     questionText: 'Como está a qualidade do seu sono?',
     answerKey: 'sleepQuality',
+    type: 'radio',
     options: [
       { text: 'Ótima, durmo bem', value: 'Great, I sleep well' },
       { text: 'Razoável, mas poderia ser melhor', value: 'Fair, but could be better' },
@@ -172,6 +203,7 @@ export const quizQuestions: QuizQuestion[] = [
     id: 'q12',
     questionText: 'Qual o seu nível de energia durante o dia?',
     answerKey: 'energyLevel',
+    type: 'radio',
     options: [
       { text: 'Alto e constante', value: 'High and constant' },
       { text: 'Varia durante o dia', value: 'Varies during the day' },
@@ -184,6 +216,7 @@ export const quizQuestions: QuizQuestion[] = [
     id: 'q13',
     questionText: 'O quão motivada você está para começar?',
     answerKey: 'motivationLevel',
+    type: 'radio',
     options: [
       { text: 'Muito motivada!', value: 'Very motivated!' },
       { text: 'Motivada, mas preciso de um empurrão', value: 'Motivated, but need a push' },
@@ -196,6 +229,7 @@ export const quizQuestions: QuizQuestion[] = [
     id: 'q14',
     questionText: 'Você tem alguma condição de saúde ou lesão que devemos saber?',
     answerKey: 'healthConditions',
+    type: 'radio',
     options: [
       { text: 'Não', value: 'No' },
       { text: 'Sim, problemas nas articulações', value: 'Yes, joint problems' },
@@ -208,6 +242,7 @@ export const quizQuestions: QuizQuestion[] = [
     id: 'q15',
     questionText: 'Quanto você está disposta a se comprometer com seu novo plano?',
     answerKey: 'commitment',
+    type: 'radio',
     options: [
       { text: '100% pronta para mudar!', value: '100% ready to change!' },
       { text: 'Vou dar o meu melhor', value: 'I will do my best' },
@@ -217,3 +252,5 @@ export const quizQuestions: QuizQuestion[] = [
     imagePlaceholder: smilingFitnessWoman,
   },
 ];
+
+    

@@ -13,6 +13,8 @@ import type { PersonalizedFitnessPlanInput } from '@/ai/flows/personalized-fitne
 import { Card, CardContent } from './ui/card';
 import { RadioGroup, RadioGroupItem } from './ui/radio-group';
 import { Label } from './ui/label';
+import { Checkbox } from './ui/checkbox';
+
 
 export default function QuizFlow() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -22,6 +24,8 @@ export default function QuizFlow() {
   const [isQuizStarted, setIsQuizStarted] = useState(false);
   const [showTransitionScreen, setShowTransitionScreen] = useState(false);
   const { toast } = useToast();
+
+  const [multiSelectAnswers, setMultiSelectAnswers] = useState<string[]>([]);
 
   // We add 2 to totalQuestions to account for the new intermediate screens
   const totalQuestions = quizQuestions.length + 2;
@@ -66,6 +70,23 @@ export default function QuizFlow() {
     const option = question.options.find(o => o.value === value);
     if(option) {
       handleAnswerClick(question, option);
+    }
+  };
+
+  const handleMultiSelectAnswer = (value: string) => {
+    setMultiSelectAnswers(prev => 
+      prev.includes(value) ? prev.filter(item => item !== value) : [...prev, value]
+    );
+  };
+
+  const handleMultiSelectContinue = () => {
+    const question = currentQuestion;
+    const newAnswers = { ...answers, [question.answerKey]: multiSelectAnswers.join(', ') };
+    setAnswers(newAnswers);
+    if (currentStep < totalQuestions - 1) {
+      setCurrentStep(currentStep + 1);
+    } else {
+      setShowTransitionScreen(true);
     }
   };
 
@@ -137,6 +158,32 @@ export default function QuizFlow() {
         💪 Começando a Pilates Asiática hoje, você vai queimar a gordura da menopausa!
       </p>
       <Button onClick={() => setCurrentStep(currentStep + 1)} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
+        Continuar
+      </Button>
+    </div>
+  );
+
+  const renderStep5Screen = () => (
+    <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
+      <h2 className="text-2xl md:text-3xl font-bold mb-2">{currentQuestion.questionText}</h2>
+      <p className="text-muted-foreground mb-6">{currentQuestion.questionSubtitle}</p>
+      <div className="flex flex-col space-y-2 w-full text-left mb-6">
+        {currentQuestion.options.map(option => (
+          <Label
+            key={option.value}
+            htmlFor={option.value}
+            className="flex items-center space-x-3 cursor-pointer rounded-lg border bg-card text-card-foreground shadow-sm p-4 hover:bg-accent/50 transition-colors"
+          >
+            <Checkbox
+              id={option.value}
+              checked={multiSelectAnswers.includes(option.value)}
+              onCheckedChange={() => handleMultiSelectAnswer(option.value)}
+            />
+            <span>{option.text}</span>
+          </Label>
+        ))}
+      </div>
+      <Button onClick={handleMultiSelectContinue} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
         Continuar
       </Button>
     </div>
@@ -230,7 +277,7 @@ export default function QuizFlow() {
             <div className='bg-white/50 rounded-lg p-6 border'>
               {plan && <MarkdownRenderer content={plan} />}
             </div>
-            <Button onClick={() => { setPlan(null); setAnswers({}); setCurrentStep(0); setIsQuizStarted(false); setShowTransitionScreen(false); }} className="mt-8">
+            <Button onClick={() => { setPlan(null); setAnswers({}); setCurrentStep(0); setIsQuizStarted(false); setShowTransitionScreen(false); setMultiSelectAnswers([]); }} className="mt-8">
                 Refazer Quiz
             </Button>
         </CardContent>
@@ -247,6 +294,7 @@ export default function QuizFlow() {
     if (showTransitionScreen) return renderTransitionScreen();
     if (currentStep === 1) return renderStep2Screen();
     if (currentStep === 3) return renderStep4Screen();
+    if (currentStep === 4) return renderStep5Screen();
     return renderQuiz();
   }
 
@@ -274,3 +322,5 @@ export default function QuizFlow() {
     </div>
   );
 }
+
+    
