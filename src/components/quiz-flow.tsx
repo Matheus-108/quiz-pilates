@@ -32,21 +32,11 @@ export default function QuizFlow() {
   const progressValue = isQuizStarted ? ((currentStep + 1) / totalQuestions) * 100 : 0;
   
   // Adjust question index based on intermediate screens
-  let questionIndex;
-  if (currentStep < 1) {
-    questionIndex = currentStep;
-  } else if (currentStep > 1 && currentStep < 3) {
-    questionIndex = currentStep -1;
-  } else if (currentStep > 3 && currentStep < 5) {
-    questionIndex = currentStep - 2;
-  } else if (currentStep > 5 && currentStep < 8) {
-    questionIndex = currentStep - 3;
-  } else if (currentStep > 8) {
-    questionIndex = currentStep - 4;
-  } else {
-    // For intermediate screens or the question right after
-    questionIndex = currentStep - Math.floor(currentStep / 2) - 1;
-  }
+  let questionIndex = currentStep;
+  if (currentStep > 1) questionIndex--; // Account for step 2 screen
+  if (currentStep > 3) questionIndex--; // Account for step 4 screen
+  if (currentStep > 7) questionIndex--; // Account for step 8 screen
+  
   const currentQuestion = quizQuestions[questionIndex];
 
 
@@ -56,7 +46,13 @@ export default function QuizFlow() {
 
   const handleGoBack = () => {
     if (currentStep > 0) {
-      const prevQuestion = quizQuestions[questionIndex -1];
+      // Logic to determine the previous question index
+      let prevQuestionIndex = currentStep - 1;
+      if (prevQuestionIndex > 1) prevQuestionIndex--;
+      if (prevQuestionIndex > 3) prevQuestionIndex--;
+      if (prevQuestionIndex > 7) prevQuestionIndex--;
+      
+      const prevQuestion = quizQuestions[prevQuestionIndex];
       if (prevQuestion && prevQuestion.type === 'checkbox') {
         setMultiSelectAnswers(answers[prevQuestion.answerKey]?.split(', ') || []);
       }
@@ -222,8 +218,8 @@ export default function QuizFlow() {
 
 
   const renderQuiz = () => {
-    // We don't want an image for questionIndex 1, 5
-    const shouldShowImage = questionIndex !== 1 && questionIndex !== 5 && questionIndex !== 6;
+    // We don't want an image for questionIndex 1, 5, 8
+    const shouldShowImage = questionIndex !== 1 && questionIndex !== 5 && questionIndex !== 6 && questionIndex !== 8;
     
     return (
         <div key={currentStep} className="w-full animate-in fade-in-50 duration-500 text-center">
@@ -355,5 +351,3 @@ export default function QuizFlow() {
     </div>
   );
 }
-
-    
