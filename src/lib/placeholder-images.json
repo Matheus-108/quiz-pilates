@@ -1,3 +1,10 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "smiling-fitness-woman-1",
+      "description": "A smiling fitness woman in workout clothes.",
+      "imageUrl": "https://picsum.photos/seed/fitness-woman/400/600",
+      "imageHint": "fitness woman"
+    }
+  ]
 }
