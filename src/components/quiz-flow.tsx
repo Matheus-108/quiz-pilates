@@ -196,18 +196,19 @@ export default function QuizFlow() {
   
   const renderStep10Screen = () => (
     <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
-       <div className="relative w-full h-72 rounded-lg overflow-hidden shadow-md mb-4">
-          <Image 
-            src="https://i.imgur.com/cGbt7Ct.png" 
-            alt="Mulher preocupada"
-            fill
-            className="object-cover"
-          />
-        </div>
       <p className="text-xl font-semibold text-foreground mb-6">
         ⚠️ Se você não agir agora, sua saúde e bem-estar podem piorar rapidamente!<br/>
         A boa notícia é: ainda dá tempo de escolher o caminho certo.
       </p>
+      <div className="relative w-full rounded-lg overflow-hidden shadow-md mb-4">
+          <Image 
+            src="https://i.imgur.com/cGbt7Ct.png" 
+            alt="Mulher preocupada"
+            width={400}
+            height={288}
+            className="object-contain"
+          />
+      </div>
       <Button onClick={() => setCurrentStep(currentStep + 1)} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
         Continuar
       </Button>
