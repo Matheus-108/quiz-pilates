@@ -27,17 +27,13 @@ export default function QuizFlow() {
 
   const [multiSelectAnswers, setMultiSelectAnswers] = useState<string[]>([]);
 
-  // We add 4 to totalQuestions to account for the new intermediate/final screens
-  const totalQuestions = quizQuestions.length + 4;
+  // We add 1 to totalQuestions to account for the new informational screen.
+  const totalQuestions = quizQuestions.length + 1;
   const progressValue = isQuizStarted ? ((currentStep + 1) / totalQuestions) * 100 : 0;
   
-  // Adjust question index based on intermediate screens
-  let questionIndex = currentStep;
-  if (currentStep > 1) questionIndex--; // Account for step 2 screen
-  if (currentStep > 3) questionIndex--; // Account for step 4 screen
-  if (currentStep > 7) questionIndex--; // Account for step 8 screen
-  
+  const questionIndex = currentStep;
   const currentQuestion = quizQuestions[questionIndex];
+  const isLastQuestion = questionIndex === quizQuestions.length - 1;
 
 
   const handleStartQuiz = () => {
@@ -46,17 +42,12 @@ export default function QuizFlow() {
 
   const handleGoBack = () => {
     if (currentStep > 0) {
-      // Logic to determine the previous question index
-      let prevQuestionIndex = currentStep - 1;
-      if (prevQuestionIndex > 1) prevQuestionIndex--;
-      if (prevQuestionIndex > 3) prevQuestionIndex--;
-      if (prevQuestionIndex > 7) prevQuestionIndex--;
-      
-      const prevQuestion = quizQuestions[prevQuestionIndex];
+      const prevQuestion = quizQuestions[currentStep - 1];
       if (prevQuestion && prevQuestion.type === 'checkbox') {
         setMultiSelectAnswers(answers[prevQuestion.answerKey]?.split(', ') || []);
       }
       setCurrentStep(currentStep - 1);
+      setShowFinalStepScreen(false); // Go back from warning or final screen
     }
   };
   
@@ -64,11 +55,11 @@ export default function QuizFlow() {
     const newAnswers = { ...answers, [question.answerKey]: option.value };
     setAnswers(newAnswers);
 
-    if (questionIndex < quizQuestions.length - 1) {
+    if (!isLastQuestion) {
       setCurrentStep(currentStep + 1);
     } else {
-      // Last question answered, show transition screen
-      setShowFinalStepScreen(true);
+      // Last question answered, show warning screen
+      setCurrentStep(currentStep + 1);
     }
   };
   
@@ -90,15 +81,21 @@ export default function QuizFlow() {
     const newAnswers = { ...answers, [question.answerKey]: multiSelectAnswers.join(', ') };
     setAnswers(newAnswers);
     setMultiSelectAnswers([]); // Reset for next multi-select question
-    if (questionIndex < quizQuestions.length - 1) {
+    
+    if (!isLastQuestion) {
       setCurrentStep(currentStep + 1);
     } else {
-      setShowFinalStepScreen(true);
+       // Last question answered, show warning screen
+      setCurrentStep(currentStep + 1);
     }
   };
 
+  const handleWarningContinue = () => {
+    setShowFinalStepScreen(true);
+  }
+
   const generatePlan = async () => {
-    setShowFinalStepScreen(false); // Hide transition screen
+    setShowFinalStepScreen(false);
     setIsLoading(true);
     const result = await generatePlanAction(answers as PersonalizedFitnessPlanInput);
     setIsLoading(false);
@@ -131,60 +128,24 @@ export default function QuizFlow() {
         </Button>
     </div>
   );
-  
-  const renderStep2Screen = () => (
-      <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
-        <Button onClick={() => {}} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform mb-4">Atenção meninas</Button>
-        <div className="relative w-full h-72 rounded-lg overflow-hidden shadow-md mb-4">
-          <Image 
-            src="https://i.imgur.com/Vv5qIiR.png" 
-            alt="Mulheres felizes"
-            fill
-            className="object-cover"
-          />
-        </div>
-        <p className="text-xl font-semibold text-foreground mb-6">Milhares de mulheres ja eliminaram a gordura da menopausa, agora é sua vez!</p>
-        <Button onClick={() => setCurrentStep(currentStep + 1)} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
-          Agora é sua vez
-        </Button>
+
+  const renderWarningScreen = () => (
+    <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
+      <p className="text-xl font-semibold text-foreground mb-6">
+        ⚠️ Se você não agir agora, sua saúde e bem-estar podem piorar rapidamente!
+        <br/><br/>
+        A boa notícia é: ainda dá tempo de escolher o caminho certo.
+      </p>
+      <div className="relative w-full h-72 rounded-lg overflow-hidden shadow-md mb-4">
+        <Image 
+          src="https://i.imgur.com/cGbt7Ct.png" 
+          alt="Mulher fazendo a escolha certa"
+          width={400}
+          height={288}
+          className="object-cover"
+        />
       </div>
-  );
-
-  const renderStep4Screen = () => (
-    <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
-       <div className="relative w-full h-72 rounded-lg overflow-hidden shadow-md mb-4">
-          <Image 
-            src="https://i.imgur.com/RXOtBJJ.png" 
-            alt="Pilates Asiática"
-            fill
-            className="object-cover"
-          />
-        </div>
-      <p className="text-xl font-semibold text-foreground mb-6">
-        🔥 10 minutos por dia...<br/>
-        💪 Começando a Pilates Asiática hoje, você vai queimar a gordura da menopausa!
-      </p>
-      <Button onClick={() => setCurrentStep(currentStep + 1)} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
-        Continuar
-      </Button>
-    </div>
-  );
-
-  const renderStep8Screen = () => (
-    <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
-       <div className="relative w-full h-72 rounded-lg overflow-hidden shadow-md mb-4">
-          <Image 
-            src="https://i.imgur.com/WroXAeh.png" 
-            alt="Mulher se exercitando"
-            fill
-            className="object-cover"
-          />
-        </div>
-      <p className="text-xl font-semibold text-foreground mb-6">
-        💡 78% das mulheres da sua idade sofrem com isso.<br/>
-        Quem age agora começa a ver resultados já nos primeiros dias!
-      </p>
-      <Button onClick={() => setCurrentStep(currentStep + 1)} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
+      <Button onClick={handleWarningContinue} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
         Continuar
       </Button>
     </div>
@@ -310,18 +271,20 @@ export default function QuizFlow() {
   );
   
   const shouldShowProgressBar = (isQuizStarted || plan || showFinalStepScreen) && !isLoading;
-  const shouldShowBackButton = isQuizStarted && currentStep > 0 && !plan && !isLoading && !showFinalStepScreen;
+  const shouldShowBackButton = isQuizStarted && currentStep > 0 && !plan && !isLoading;
   
   const renderContent = () => {
     if (!isQuizStarted) return renderInitialScreen();
     if (isLoading) return renderLoading();
     if (plan) return renderPlan();
     if (showFinalStepScreen) return renderFinalStepScreen();
-    if (currentStep === 1) return renderStep2Screen();
-    if (currentStep === 3) return renderStep4Screen();
-    if (currentStep === 7) return renderStep8Screen();
+    // After the last question, show the warning screen
+    if (currentStep === quizQuestions.length) return renderWarningScreen();
     if (currentQuestion && currentQuestion.type === 'checkbox') return renderMultiSelectScreen();
-    return renderQuiz();
+    if (currentQuestion) return renderQuiz();
+
+    // Fallback or should not happen state
+    return renderInitialScreen();
   }
 
 
@@ -348,3 +311,5 @@ export default function QuizFlow() {
     </div>
   );
 }
+
+    
