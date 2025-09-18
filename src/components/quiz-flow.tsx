@@ -218,8 +218,8 @@ export default function QuizFlow() {
 
 
   const renderQuiz = () => {
-    // We don't want an image for questionIndex 1, 5, 8
-    const shouldShowImage = questionIndex !== 1 && questionIndex !== 5 && questionIndex !== 6 && questionIndex !== 8;
+    // We don't want an image for questionIndex 1, 5, 6, 7, 8
+    const shouldShowImage = questionIndex !== 1 && questionIndex !== 5 && questionIndex !== 6 && questionIndex !== 7 && questionIndex !== 8;
     
     return (
         <div key={currentStep} className="w-full animate-in fade-in-50 duration-500 text-center">
