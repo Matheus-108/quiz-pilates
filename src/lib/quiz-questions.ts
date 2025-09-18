@@ -21,10 +21,6 @@ export interface QuizQuestion {
     | 'workoutTypes'
     | 'dietExperience'
     | 'dietaryRestrictions'
-    | 'energyLevel'
-    | 'motivationLevel'
-    | 'healthConditions'
-    | 'commitment'
     | 'menopauseSymptoms';
   type?: 'radio' | 'checkbox';
   questionSubtitle?: string;
@@ -155,58 +151,6 @@ export const quizQuestions: QuizQuestion[] = [
       { text: '71kg a 80kg', value: '71kg to 80kg' },
       { text: '81kg a 90kg', value: '81kg to 90kg' },
       { text: 'Mais de 100kg', value: 'More than 100kg' },
-    ],
-    imagePlaceholder: smilingFitnessWoman,
-  },
-  {
-    id: 'q12',
-    questionText: 'Qual o seu nível de energia durante o dia?',
-    answerKey: 'energyLevel',
-    type: 'radio',
-    options: [
-      { text: 'Alto e constante', value: 'High and constant' },
-      { text: 'Varia durante o dia', value: 'Varies during the day' },
-      { text: 'Geralmente baixo', value: 'Generally low' },
-      { text: 'Muito baixo, sinto cansaço frequente', value: 'Very low, I feel tired frequently' },
-    ],
-    imagePlaceholder: smilingFitnessWoman,
-  },
-  {
-    id: 'q13',
-    questionText: 'O quão motivada você está para começar?',
-    answerKey: 'motivationLevel',
-    type: 'radio',
-    options: [
-      { text: 'Muito motivada!', value: 'Very motivated!' },
-      { text: 'Motivada, mas preciso de um empurrão', value: 'Motivated, but need a push' },
-      { text: 'Um pouco, mas com dúvidas', value: 'A little, but with doubts' },
-      { text: 'Desmotivada, preciso de ajuda', value: 'Unmotivated, I need help' },
-    ],
-    imagePlaceholder: smilingFitnessWoman,
-  },
-  {
-    id: 'q14',
-    questionText: 'Você tem alguma condição de saúde ou lesão que devemos saber?',
-    answerKey: 'healthConditions',
-    type: 'radio',
-    options: [
-      { text: 'Não', value: 'No' },
-      { text: 'Sim, problemas nas articulações', value: 'Yes, joint problems' },
-      { text: 'Sim, problemas de coluna', value: 'Yes, back problems' },
-      { text: 'Sim, outra (especificar se possível)', value: 'Yes, other' },
-    ],
-    imagePlaceholder: smilingFitnessWoman,
-  },
-  {
-    id: 'q15',
-    questionText: 'Quanto você está disposta a se comprometer com seu novo plano?',
-    answerKey: 'commitment',
-    type: 'radio',
-    options: [
-      { text: '100% pronta para mudar!', value: '100% ready to change!' },
-      { text: 'Vou dar o meu melhor', value: 'I will do my best' },
-      { text: 'Vou tentar seguir o plano', value: 'I will try to follow the plan' },
-      { text: 'Não tenho certeza do meu compromisso', value: 'I am not sure about my commitment' },
     ],
     imagePlaceholder: smilingFitnessWoman,
   },

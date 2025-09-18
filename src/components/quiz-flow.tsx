@@ -36,8 +36,6 @@ export default function QuizFlow() {
   if (currentStep > 1) questionIndex--; // Account for step 2 screen
   if (currentStep > 3) questionIndex--; // Account for step 4 screen
   if (currentStep > 7) questionIndex--; // Account for step 8 screen
-  if (currentStep > 9) questionIndex--; // Account for step 10 screen
-  if (currentStep > 11) questionIndex--; // Account for step 12 screen
   
   const currentQuestion = quizQuestions[questionIndex];
 
@@ -53,8 +51,6 @@ export default function QuizFlow() {
       if (prevQuestionIndex > 1) prevQuestionIndex--;
       if (prevQuestionIndex > 3) prevQuestionIndex--;
       if (prevQuestionIndex > 7) prevQuestionIndex--;
-      if (prevQuestionIndex > 9) prevQuestionIndex--;
-      if (prevQuestionIndex > 11) prevQuestionIndex--;
       
       const prevQuestion = quizQuestions[prevQuestionIndex];
       if (prevQuestion && prevQuestion.type === 'checkbox') {
@@ -68,7 +64,7 @@ export default function QuizFlow() {
     const newAnswers = { ...answers, [question.answerKey]: option.value };
     setAnswers(newAnswers);
 
-    if (currentStep < totalQuestions - 1) {
+    if (questionIndex < quizQuestions.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
       // Last question answered, show transition screen
@@ -94,7 +90,7 @@ export default function QuizFlow() {
     const newAnswers = { ...answers, [question.answerKey]: multiSelectAnswers.join(', ') };
     setAnswers(newAnswers);
     setMultiSelectAnswers([]); // Reset for next multi-select question
-    if (currentStep < totalQuestions - 1) {
+    if (questionIndex < quizQuestions.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
       setShowFinalStepScreen(true);
@@ -194,47 +190,6 @@ export default function QuizFlow() {
     </div>
   );
   
-  const renderStep10Screen = () => (
-    <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
-      <p className="text-xl font-semibold text-foreground mb-6">
-        ⚠️ Se você não agir agora, sua saúde e bem-estar podem piorar rapidamente!<br/>
-        A boa notícia é: ainda dá tempo de escolher o caminho certo.
-      </p>
-      <div className="relative w-full rounded-lg overflow-hidden shadow-md mb-4">
-          <Image 
-            src="https://i.imgur.com/cGbt7Ct.png" 
-            alt="Mulher preocupada"
-            width={400}
-            height={288}
-            className="object-contain"
-          />
-      </div>
-      <Button onClick={() => setCurrentStep(currentStep + 1)} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
-        Continuar
-      </Button>
-    </div>
-  );
-
-
-  const renderStep12Screen = () => (
-    <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
-       <div className="relative w-full h-72 rounded-lg overflow-hidden shadow-md mb-4">
-          <Image 
-            src="https://i.imgur.com/woZ32hI.png" 
-            alt="Mulher praticando Pilates Asiática"
-            fill
-            className="object-cover"
-          />
-        </div>
-      <p className="text-xl font-semibold text-foreground mb-6">
-      ✨ Seu corpo pode começar a mudar em apenas 3 dias com a Pilates Asiática.<br />
-      Se você começar a fazer a Pilates Asiática hoje você ficará mais saudável e jovem!
-      </p>
-      <Button onClick={() => setCurrentStep(currentStep + 1)} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
-        Continuar
-      </Button>
-    </div>
-  );
 
   const renderMultiSelectScreen = () => (
     <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
@@ -265,7 +220,7 @@ export default function QuizFlow() {
 
   const renderQuiz = () => {
     // We don't want an image for questionIndex 1, 5, 6, 7, 8
-    const shouldShowImage = ![1, 5, 6, 7, 8, 9].includes(questionIndex);
+    const shouldShowImage = ![1, 5, 6, 7].includes(questionIndex);
     
     return (
         <div key={currentStep} className="w-full animate-in fade-in-50 duration-500 text-center">
@@ -365,8 +320,6 @@ export default function QuizFlow() {
     if (currentStep === 1) return renderStep2Screen();
     if (currentStep === 3) return renderStep4Screen();
     if (currentStep === 7) return renderStep8Screen();
-    if (currentStep === 9) return renderStep10Screen();
-    if (currentStep === 11) return renderStep12Screen();
     if (currentQuestion && currentQuestion.type === 'checkbox') return renderMultiSelectScreen();
     return renderQuiz();
   }

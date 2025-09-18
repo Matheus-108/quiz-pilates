@@ -21,10 +21,7 @@ const PersonalizedFitnessPlanInputSchema = z.object({
   workoutTypes: z.string().describe('The types of exercise the user enjoys.'),
   dietExperience: z.string().describe('The user\'s experience with diets.'),
   dietaryRestrictions: z.string().describe('Any dietary restrictions the user has.'),
-  energyLevel: z.string().describe('The user\'s energy level during the day.'),
-  motivationLevel: z.string().describe('The user\'s motivation level to start.'),
-  healthConditions: z.string().describe('Any health conditions or injuries the user has.'),
-  commitment: z.string().describe('How committed the user is to following the plan.'),
+  menopauseSymptoms: z.string().describe('The menopause symptoms the user is experiencing.'),
 });
 export type PersonalizedFitnessPlanInput = z.infer<typeof PersonalizedFitnessPlanInputSchema>;
 
@@ -55,10 +52,7 @@ const prompt = ai.definePrompt({
 - **Preferred Workout Types:** {{{workoutTypes}}}
 - **Experience with Diets:** {{{dietExperience}}}
 - **Dietary Restrictions:** {{{dietaryRestrictions}}}
-- **Daily Energy Level:** {{{energyLevel}}}
-- **Motivation Level:** {{{motivationLevel}}}
-- **Health Conditions/Injuries:** {{{healthConditions}}}
-- **Commitment Level:** {{{commitment}}}
+- **Menopause Symptoms:** {{{menopauseSymptoms}}}
 
 ## Instructions:
 1.  **Acknowledge the User's Goal:** Start by acknowledging the user's main goal, especially in the context of menopause (weight loss, fat burning).

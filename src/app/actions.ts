@@ -16,10 +16,7 @@ const AnswersSchema = z.object({
   workoutTypes: z.string(),
   dietExperience: z.string(),
   dietaryRestrictions: z.string(),
-  energyLevel: z.string(),
-  motivationLevel: z.string(),
-  healthConditions: z.string(),
-  commitment: z.string(),
+  menopauseSymptoms: z.string(),
 });
 
 export async function generatePlanAction(answers: PersonalizedFitnessPlanInput) {
