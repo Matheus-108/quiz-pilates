@@ -11,6 +11,8 @@ import { useToast } from '@/hooks/use-toast';
 import MarkdownRenderer from '@/components/markdown-renderer';
 import type { PersonalizedFitnessPlanInput } from '@/ai/flows/personalized-fitness-plan';
 import { Card, CardContent } from './ui/card';
+import { RadioGroup, RadioGroupItem } from './ui/radio-group';
+import { Label } from './ui/label';
 
 export default function QuizFlow() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -21,7 +23,7 @@ export default function QuizFlow() {
   const { toast } = useToast();
 
   const totalQuestions = quizQuestions.length;
-  const progressValue = isQuizStarted ? ((currentStep) / totalQuestions) * 100 : 0;
+  const progressValue = isQuizStarted ? ((currentStep + 1) / totalQuestions) * 100 : 0;
   const currentQuestion = quizQuestions[currentStep];
 
   const handleStartQuiz = () => {
@@ -36,6 +38,13 @@ export default function QuizFlow() {
       setCurrentStep(currentStep + 1);
     } else {
       generatePlan(newAnswers as PersonalizedFitnessPlanInput);
+    }
+  };
+  
+  const handleAnswerSelect = (question: QuizQuestion, value: string) => {
+    const option = question.options.find(o => o.value === value);
+    if(option) {
+      handleAnswerClick(question, option);
     }
   };
 
@@ -74,26 +83,31 @@ export default function QuizFlow() {
 
   const renderQuiz = () => (
     <div key={currentStep} className="w-full animate-in fade-in-50 duration-500">
-        <h2 className="text-2xl md:text-4xl font-bold text-center mb-8">{currentQuestion.questionText}</h2>
+        <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">{currentQuestion.questionText}</h2>
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div className="flex flex-col space-y-4">
+              <RadioGroup
+                onValueChange={(value) => handleAnswerSelect(currentQuestion, value)}
+                className="space-y-4"
+              >
                 {currentQuestion.options.map((option) => (
-                    <Button
-                        key={option.value}
-                        variant="outline"
-                        className="w-full justify-center text-center h-auto py-4 px-6 text-base rounded-full border-border hover:bg-primary/10 hover:border-primary hover:text-primary transition-all duration-300 shadow-sm"
-                        onClick={() => handleAnswerClick(currentQuestion, option)}
-                    >
-                        {option.text}
-                    </Button>
+                  <Label
+                    key={option.value}
+                    htmlFor={option.value}
+                    className="flex items-center space-x-4 cursor-pointer rounded-lg border bg-card text-card-foreground shadow-sm p-4 hover:bg-accent/50 transition-colors"
+                  >
+                    <RadioGroupItem value={option.value} id={option.value} />
+                    <span>{option.text}</span>
+                  </Label>
                 ))}
+              </RadioGroup>
             </div>
-            <div className="relative h-96 w-full md:h-[600px] rounded-lg overflow-hidden order-first md:order-last shadow-md">
+            <div className="relative h-96 w-full md:h-[500px] rounded-lg overflow-hidden order-first md:order-last shadow-md">
                 <Image
                     src={currentQuestion.imagePlaceholder.imageUrl}
                     alt={currentQuestion.imagePlaceholder.description}
                     fill
-                    className="object-cover"
+                    className="object-contain"
                     data-ai-hint={currentQuestion.imagePlaceholder.imageHint}
                     sizes="(max-width: 768px) 100vw, 50vw"
                 />
@@ -127,17 +141,17 @@ export default function QuizFlow() {
 
   return (
     <div className="w-full max-w-6xl mx-auto flex flex-col items-center gap-6">
-      <div className="h-12 flex items-center">
-        <Image src="https://i.imgur.com/HlMARHx.png" alt="MenoShape Logo" width={208} height={50} priority className="h-auto w-auto" />
+      <div className="h-20 flex items-center">
+        <Image src="https://i.imgur.com/7W5p2S8.png" alt="Wase Pilates Logo" width={140} height={140} priority />
       </div>
 
       {(isQuizStarted || plan) && !isLoading && (
-        <div className="w-full px-4 h-2 my-4">
+        <div className="w-full px-4 h-2 my-2">
             <Progress value={plan ? 100 : progressValue} className="h-2 w-full [&>div]:bg-primary" />
         </div>
       )}
 
-      <div className="w-full flex-grow flex items-center justify-center mt-8 min-h-[60vh]">
+      <div className="w-full flex-grow flex items-center justify-center mt-4 min-h-[60vh]">
         {!isQuizStarted && !isLoading && !plan && renderInitialScreen()}
         {isQuizStarted && !isLoading && !plan && renderQuiz()}
         {isLoading && renderLoading()}
