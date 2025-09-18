@@ -293,6 +293,25 @@ export default function QuizFlow() {
 
       <h3 className="text-xl md:text-3xl font-bold pt-8">Conheça a especialista</h3>
       <Image src="https://i.imgur.com/mllxplB.png" alt="Especialista" width={700} height={400} className="rounded-lg shadow-md" />
+
+      <p className="text-muted-foreground max-w-2xl">
+        Camila Nakamoto é referência quando o assunto é menopausa e emagrecimento feminino. Depois de viver anos na Ásia, onde descobriu como o Pilates Ásiatico transformava a vida das mulheres, ela trouxe essa prática para o Brasil. E hoje ela vai ajudar você!
+      </p>
+
+      <h3 className="text-xl md:text-3xl font-bold text-destructive pt-4">🚨 VOCÊ VAI TOMAR A DECISÃO CERTA?</h3>
+      
+      <p className="text-lg font-semibold max-w-2xl">
+        O tempo não perdoa. Cada semana parada é mais gordura acumulada na barriga da menopausa, mais sintomas te consumindo e mais autoestima indo pro chão.
+      </p>
+      <p className="text-lg font-semibold max-w-2xl">
+      👉 Ou você age agora, ou aceita continuar perdendo sua energia e juventude. A escolha é sua!
+      </p>
+
+      <Image src="https://i.imgur.com/uQuqLc8.png" alt="Transformação corporal" width={700} height={400} className="rounded-lg shadow-md" />
+      
+      <Button onClick={handleRestart} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
+        Quero tomar a decisão certa!
+      </Button>
     </div>
   );
 
