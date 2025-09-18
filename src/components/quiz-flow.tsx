@@ -23,6 +23,7 @@ export default function QuizFlow() {
   const [isLoading, setIsLoading] = useState(false);
   const [isQuizStarted, setIsQuizStarted] = useState(false);
   const [showFinalStepScreen, setShowFinalStepScreen] = useState(false);
+  const [showSalesPage, setShowSalesPage] = useState(false);
   const { toast } = useToast();
 
   const [multiSelectAnswers, setMultiSelectAnswers] = useState<string[]>([]);
@@ -35,6 +36,15 @@ export default function QuizFlow() {
   const currentQuestion = quizQuestions[questionIndex];
   const isLastQuestion = questionIndex === quizQuestions.length - 1;
 
+  const handleRestart = () => {
+    setPlan(null);
+    setAnswers({});
+    setCurrentStep(0);
+    setIsQuizStarted(false);
+    setShowFinalStepScreen(false);
+    setShowSalesPage(false);
+    setMultiSelectAnswers([]);
+  };
 
   const handleStartQuiz = () => {
     setIsQuizStarted(true);
@@ -94,6 +104,11 @@ export default function QuizFlow() {
     setShowFinalStepScreen(true);
   }
 
+  const handleShowSalesPage = () => {
+    setShowFinalStepScreen(false);
+    setShowSalesPage(true);
+  };
+
   const generatePlan = async () => {
     setShowFinalStepScreen(false);
     setIsLoading(true);
@@ -109,9 +124,7 @@ export default function QuizFlow() {
         description: result.error || 'Não foi possível gerar seu plano. Por favor, tente novamente.',
       });
       // Reset state to start over
-      setCurrentStep(0);
-      setAnswers({});
-      setIsQuizStarted(false);
+      handleRestart();
     }
   };
 
@@ -241,9 +254,45 @@ export default function QuizFlow() {
         <br/><br/>
         👉 Clique no botão abaixo e comece a fazer a Pilates Asiática ainda hoje!
       </p>
-      <Button onClick={() => generatePlan()} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
+      <Button onClick={handleShowSalesPage} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
       ✅ Ver meu plano personalizado!
       </Button>
+    </div>
+  );
+
+  const renderSalesPage = () => (
+    <div className="w-full max-w-3xl text-center animate-in fade-in duration-500 flex flex-col items-center gap-8">
+      <h2 className="text-2xl md:text-4xl font-bold">🔥 10 MINUTOS POR DIA É O SUFICIENTE PARA QUEIMAR A GORDURA E RECUPERAR A ENERGIA!</h2>
+      <Image src="https://i.imgur.com/ChtXZZA.png" alt="Mulher se exercitando" width={700} height={400} className="rounded-lg shadow-md" />
+      
+      <h3 className="text-xl md:text-3xl font-bold">👇 VEJA ALGUNS DOS MATERIAIS QUE VOCÊ VAI RECEBER NA PRÁTICA</h3>
+      <div className="flex flex-col md:flex-row gap-4">
+        <Image src="https://i.imgur.com/y8FKCJw.png" alt="Material 1" width={340} height={340} className="rounded-lg shadow-md" />
+        <Image src="https://i.imgur.com/ZZQzyy1.png" alt="Material 2" width={340} height={340} className="rounded-lg shadow-md" />
+      </div>
+
+      <h3 className="text-xl md:text-3xl font-bold">🎁 VOCÊ AINDA VAI RECEBER 4 PRESENTES DE GRAÇA...</h3>
+      <div className="flex flex-col md:flex-row gap-4">
+        <Image src="https://i.imgur.com/CPR4yiz.png" alt="Presente 1" width={340} height={340} className="rounded-lg shadow-md" />
+        <Image src="https://i.imgur.com/OHLq4Mu.png" alt="Presente 2" width={340} height={340} className="rounded-lg shadow-md" />
+      </div>
+
+      <h2 className="text-2xl md:text-4xl font-bold">😱 TRANSFORME SEU CORPO HOJE COM APENAS 10 MINUTOS POR DIA!</h2>
+      <Image src="https://i.imgur.com/uQuqLc8.png" alt="Transformação corporal" width={700} height={400} className="rounded-lg shadow-md" />
+      
+      <Button onClick={handleRestart} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
+        Quero transformar meu corpo hoje!
+      </Button>
+
+      <h3 className="text-xl md:text-3xl font-bold pt-8">🗣️ VEJA O QUE NOSSAS ALUNAS ESTÃO DIZENDO:</h3>
+      <div className="flex flex-col gap-4 w-full">
+        <Image src="https://i.imgur.com/HLaLzJQ.png" alt="Depoimento 1" width={700} height={150} className="rounded-lg shadow-md object-contain" />
+        <Image src="https://i.imgur.com/j5wY4i6.png" alt="Depoimento 2" width={700} height={150} className="rounded-lg shadow-md object-contain" />
+        <Image src="https://i.imgur.com/3VEnMKz.png" alt="Depoimento 3" width={700} height={150} className="rounded-lg shadow-md object-contain" />
+      </div>
+
+      <h3 className="text-xl md:text-3xl font-bold pt-8">Conheça a especialista</h3>
+      <Image src="https://i.imgur.com/mllxplB.png" alt="Especialista" width={700} height={400} className="rounded-lg shadow-md" />
     </div>
   );
 
@@ -263,20 +312,21 @@ export default function QuizFlow() {
             <div className='bg-white/50 rounded-lg p-6 border'>
               {plan && <MarkdownRenderer content={plan} />}
             </div>
-            <Button onClick={() => { setPlan(null); setAnswers({}); setCurrentStep(0); setIsQuizStarted(false); setShowFinalStepScreen(false); setMultiSelectAnswers([]); }} className="mt-8">
+            <Button onClick={handleRestart} className="mt-8">
                 Refazer Quiz
             </Button>
         </CardContent>
     </Card>
   );
   
-  const shouldShowProgressBar = (isQuizStarted || plan || showFinalStepScreen) && !isLoading;
-  const shouldShowBackButton = isQuizStarted && currentStep > 0 && !plan && !isLoading;
+  const shouldShowProgressBar = (isQuizStarted || plan || showFinalStepScreen || showSalesPage) && !isLoading;
+  const shouldShowBackButton = isQuizStarted && currentStep > 0 && !plan && !isLoading && !showSalesPage;
   
   const renderContent = () => {
     if (!isQuizStarted) return renderInitialScreen();
     if (isLoading) return renderLoading();
     if (plan) return renderPlan();
+    if (showSalesPage) return renderSalesPage();
     if (showFinalStepScreen) return renderFinalStepScreen();
     // After the last question, show the warning screen
     if (currentStep === quizQuestions.length) return renderWarningScreen();
@@ -305,11 +355,9 @@ export default function QuizFlow() {
         </div>
       )}
 
-      <div className="w-full flex-grow flex items-center justify-center mt-4 min-h-[60vh]">
+      <div className="w-full flex-grow flex items-center justify-center mt-4 min-h-[60vh] px-4">
         {renderContent()}
       </div>
     </div>
   );
 }
-
-    
