@@ -10,6 +10,18 @@ const AnswersSchema = z.object({
   ageRange: z.string(),
   fitnessLevel: z.string(),
   timePerDay: z.string(),
+  mainGoal: z.string(),
+  problemAreas: z.string(),
+  workoutLocation: z.string(),
+  workoutTypes: z.string(),
+  dietExperience: z.string(),
+  dietaryRestrictions: z.string(),
+  stressLevel: z.string(),
+  sleepQuality: z.string(),
+  energyLevel: z.string(),
+  motivationLevel: z.string(),
+  healthConditions: z.string(),
+  commitment: z.string(),
 });
 
 export async function generatePlanAction(answers: PersonalizedFitnessPlanInput) {
