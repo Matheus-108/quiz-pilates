@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { Loader2 } from 'lucide-react';
+import { ArrowLeft, Loader2 } from 'lucide-react';
 import { quizQuestions, type QuizQuestion, type QuizOption } from '@/lib/quiz-questions';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
@@ -29,6 +29,12 @@ export default function QuizFlow() {
 
   const handleStartQuiz = () => {
     setIsQuizStarted(true);
+  };
+
+  const handleGoBack = () => {
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+    }
   };
   
   const handleAnswerClick = (question: QuizQuestion, option: QuizOption) => {
@@ -97,7 +103,14 @@ export default function QuizFlow() {
             </p>
           </div>
         )}
-        <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">{currentQuestion.questionText}</h2>
+        <div className="relative mb-8 text-center">
+            {currentStep > 0 && (
+                <Button onClick={handleGoBack} variant="ghost" size="icon" className="absolute left-0 top-1/2 -translate-y-1/2">
+                    <ArrowLeft className="h-6 w-6" />
+                </Button>
+            )}
+            <h2 className="text-2xl md:text-3xl font-bold">{currentQuestion.questionText}</h2>
+        </div>
         <div className="grid grid-cols-2 gap-2 items-center text-left">
             <div className="flex flex-col space-y-2">
               <RadioGroup
