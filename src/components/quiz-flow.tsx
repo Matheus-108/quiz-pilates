@@ -98,17 +98,17 @@ export default function QuizFlow() {
           </div>
         )}
         <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">{currentQuestion.questionText}</h2>
-        <div className="grid md:grid-cols-2 gap-4 items-center text-left">
-            <div className="flex flex-col space-y-3">
+        <div className="grid grid-cols-2 gap-2 items-center text-left">
+            <div className="flex flex-col space-y-2">
               <RadioGroup
                 onValueChange={(value) => handleAnswerSelect(currentQuestion, value)}
-                className="space-y-3"
+                className="space-y-2"
               >
                 {currentQuestion.options.map((option) => (
                   <Label
                     key={option.value}
                     htmlFor={option.value}
-                    className="flex items-center space-x-4 cursor-pointer rounded-lg border bg-card text-card-foreground shadow-sm p-4 hover:bg-accent/50 transition-colors"
+                    className="flex items-center space-x-2 cursor-pointer rounded-lg border bg-card text-card-foreground shadow-sm p-3 hover:bg-accent/50 transition-colors"
                   >
                     <RadioGroupItem value={option.value} id={option.value} />
                     <span>{option.text}</span>
@@ -116,14 +116,14 @@ export default function QuizFlow() {
                 ))}
               </RadioGroup>
             </div>
-            <div className="relative h-64 w-full md:h-72 rounded-lg overflow-hidden order-first md:order-last shadow-md">
+            <div className="relative h-64 w-full rounded-lg overflow-hidden shadow-md">
                 <Image
                     src={currentQuestion.imagePlaceholder.imageUrl}
                     alt={currentQuestion.imagePlaceholder.description}
                     fill
                     className="object-contain"
                     data-ai-hint={currentQuestion.imagePlaceholder.imageHint}
-                    sizes="(max-width: 768px) 100vw, 50vw"
+                    sizes="50vw"
                 />
             </div>
         </div>
