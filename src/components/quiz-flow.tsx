@@ -23,11 +23,20 @@ export default function QuizFlow() {
   const [showTransitionScreen, setShowTransitionScreen] = useState(false);
   const { toast } = useToast();
 
-  // We add 1 to totalQuestions to account for the new intermediate screen
-  const totalQuestions = quizQuestions.length + 1;
+  // We add 2 to totalQuestions to account for the new intermediate screens
+  const totalQuestions = quizQuestions.length + 2;
   const progressValue = isQuizStarted ? ((currentStep + 1) / totalQuestions) * 100 : 0;
-  // We subtract 1 from currentStep for questions after the intermediate screen
-  const questionIndex = currentStep > 1 ? currentStep - 1 : currentStep;
+  
+  // Adjust question index based on intermediate screens
+  let questionIndex;
+  if (currentStep < 2) {
+    questionIndex = currentStep;
+  } else if (currentStep > 3) {
+    questionIndex = currentStep - 2;
+  } else {
+    // For steps 2 and 3, it's either an intermediate screen or the question right after
+    questionIndex = currentStep - 1;
+  }
   const currentQuestion = quizQuestions[questionIndex];
 
 
@@ -113,9 +122,29 @@ export default function QuizFlow() {
       </div>
   );
 
+  const renderStep4Screen = () => (
+    <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
+       <div className="relative w-full h-72 rounded-lg overflow-hidden shadow-md mb-4">
+          <Image 
+            src="https://i.imgur.com/RXOtBJJ.png" 
+            alt="Pilates Asiática"
+            fill
+            className="object-cover"
+          />
+        </div>
+      <p className="text-xl font-semibold text-foreground mb-6">
+        🔥 10 minutos por dia...<br/>
+        💪 Começando a Pilates Asiática hoje, você vai queimar a gordura da menopausa!
+      </p>
+      <Button onClick={() => setCurrentStep(currentStep + 1)} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
+        Continuar
+      </Button>
+    </div>
+  );
+
   const renderQuiz = () => {
-    // Etapa 3 (currentStep === 2) é a segunda pergunta do quiz
-    const isThirdStep = currentStep === 2;
+    // Step 3 (currentStep === 2) is the second quiz question
+    const isSecondQuestion = currentStep === 2;
 
     return (
         <div key={currentStep} className="w-full animate-in fade-in-50 duration-500 text-center">
@@ -132,7 +161,7 @@ export default function QuizFlow() {
             <div className="relative mb-8 text-center">
                 <h2 className="text-2xl md:text-3xl font-bold">{currentQuestion.questionText}</h2>
             </div>
-            <div className={`grid ${isThirdStep ? 'grid-cols-1' : 'grid-cols-2'} gap-2 items-center text-left max-w-2xl mx-auto`}>
+            <div className={`grid ${isSecondQuestion ? 'grid-cols-1' : 'grid-cols-2'} gap-2 items-center text-left max-w-2xl mx-auto`}>
                 <div className="flex flex-col space-y-2">
                   <RadioGroup
                     onValueChange={(value) => handleAnswerSelect(currentQuestion, value)}
@@ -150,7 +179,7 @@ export default function QuizFlow() {
                     ))}
                   </RadioGroup>
                 </div>
-                {!isThirdStep && (
+                {!isSecondQuestion && (
                     <div className="relative h-64 w-full rounded-lg overflow-hidden shadow-md">
                         <Image
                             src={currentQuestion.imagePlaceholder.imageUrl}
@@ -217,6 +246,7 @@ export default function QuizFlow() {
     if (plan) return renderPlan();
     if (showTransitionScreen) return renderTransitionScreen();
     if (currentStep === 1) return renderStep2Screen();
+    if (currentStep === 3) return renderStep4Screen();
     return renderQuiz();
   }
 
