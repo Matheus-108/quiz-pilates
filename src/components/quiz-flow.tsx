@@ -104,11 +104,6 @@ export default function QuizFlow() {
           </div>
         )}
         <div className="relative mb-8 text-center">
-            {currentStep > 0 && (
-                <Button onClick={handleGoBack} variant="ghost" size="icon" className="absolute left-0 top-1/2 -translate-y-1/2">
-                    <ArrowLeft className="h-6 w-6" />
-                </Button>
-            )}
             <h2 className="text-2xl md:text-3xl font-bold">{currentQuestion.questionText}</h2>
         </div>
         <div className="grid grid-cols-2 gap-2 items-center text-left">
@@ -185,10 +180,16 @@ export default function QuizFlow() {
   );
   
   const shouldShowProgressBar = (isQuizStarted || plan || showTransitionScreen) && !isLoading;
+  const shouldShowBackButton = isQuizStarted && currentStep > 0 && !plan && !isLoading && !showTransitionScreen;
 
   return (
     <div className="w-full max-w-6xl mx-auto flex flex-col items-center gap-6">
-      <div className="h-20 flex items-center">
+      <div className="relative w-full h-20 flex items-center justify-center">
+        {shouldShowBackButton && (
+          <Button onClick={handleGoBack} variant="ghost" size="icon" className="absolute left-0">
+            <ArrowLeft className="h-6 w-6" />
+          </Button>
+        )}
         <Image src="https://i.imgur.com/7W5p2S8.png" alt="Wase Pilates Logo" width={140} height={140} priority />
       </div>
       
