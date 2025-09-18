@@ -50,6 +50,9 @@ export default function QuizFlow() {
 
   const handleGoBack = () => {
     if (currentStep > 0) {
+      if (currentStep === 4 || currentStep === 5) { // Reset multi-select on back
+        setMultiSelectAnswers([]);
+      }
       setCurrentStep(currentStep - 1);
     }
   };
@@ -83,6 +86,7 @@ export default function QuizFlow() {
     const question = currentQuestion;
     const newAnswers = { ...answers, [question.answerKey]: multiSelectAnswers.join(', ') };
     setAnswers(newAnswers);
+    setMultiSelectAnswers([]); // Reset for next multi-select question
     if (currentStep < totalQuestions - 1) {
       setCurrentStep(currentStep + 1);
     } else {
@@ -163,7 +167,7 @@ export default function QuizFlow() {
     </div>
   );
 
-  const renderStep5Screen = () => (
+  const renderMultiSelectScreen = () => (
     <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
       <h2 className="text-2xl md:text-3xl font-bold mb-2">{currentQuestion.questionText}</h2>
       <p className="text-muted-foreground mb-6">{currentQuestion.questionSubtitle}</p>
@@ -189,12 +193,13 @@ export default function QuizFlow() {
     </div>
   );
 
+
   const renderQuiz = () => {
     // Step 3 (currentStep === 2) is the second quiz question
     const isSecondQuestion = currentStep === 2;
-    // Step 6 (currentStep === 5) is the sixth quiz question
-    const isSixthQuestion = currentStep === 5;
-
+    // Step 6 (currentStep === 6 because we have 2 extra screens before and one multi-select)
+    const isSixthQuestion = questionIndex === 5; // 'workoutLocation' is the 6th question in the array (index 5)
+    
     return (
         <div key={currentStep} className="w-full animate-in fade-in-50 duration-500 text-center">
             {currentStep === 0 && (
@@ -228,7 +233,7 @@ export default function QuizFlow() {
                     ))}
                   </RadioGroup>
                 </div>
-                {!(isSecondQuestion || isSixthQuestion) && currentStep !== 4 && (
+                {!(isSecondQuestion || isSixthQuestion) && (
                     <div className="relative h-64 w-full rounded-lg overflow-hidden shadow-md">
                         <Image
                             src={currentQuestion.imagePlaceholder.imageUrl}
@@ -296,7 +301,7 @@ export default function QuizFlow() {
     if (showTransitionScreen) return renderTransitionScreen();
     if (currentStep === 1) return renderStep2Screen();
     if (currentStep === 3) return renderStep4Screen();
-    if (currentStep === 4) return renderStep5Screen();
+    if (currentQuestion.type === 'checkbox') return renderMultiSelectScreen();
     return renderQuiz();
   }
 

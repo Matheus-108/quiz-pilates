@@ -27,7 +27,7 @@ export interface QuizQuestion {
     | 'motivationLevel'
     | 'healthConditions'
     | 'commitment'
-    | 'menopauseSymptoms'; // New key for the multi-select question
+    | 'menopauseSymptoms';
   type?: 'radio' | 'checkbox';
   questionSubtitle?: string;
 }
@@ -93,31 +93,23 @@ export const quizQuestions: QuizQuestion[] = [
         { text: '📈 Ganho de peso', value: 'Weight gain' },
         { text: 'Outros', value: 'Others' }
     ],
-    imagePlaceholder: smilingFitnessWoman, // Placeholder, not used for checkbox type
-  },
-  {
-    id: 'q4',
-    questionText: 'Qual é o seu principal objetivo de fitness?',
-    answerKey: 'mainGoal',
-    type: 'radio',
-    options: [
-      { text: 'Perder peso', value: 'Lose weight' },
-      { text: 'Tonificar o corpo', value: 'Tone body' },
-      { text: 'Aumentar a energia', value: 'Increase energy' },
-      { text: 'Melhorar a saúde geral', value: 'Improve overall health' },
-    ],
     imagePlaceholder: smilingFitnessWoman,
   },
   {
-    id: 'q5',
-    questionText: 'Quais áreas do corpo você mais gostaria de focar?',
+    id: 'q5-multiselect',
+    questionText: '😣 O que mais te incomoda no seu corpo?',
+    questionSubtitle: 'Selecione as opções que você mais se identifica:',
     answerKey: 'problemAreas',
-    type: 'radio',
+    type: 'checkbox',
     options: [
-      { text: 'Barriga', value: 'Belly' },
-      { text: 'Pernas e glúteos', value: 'Legs and glutes' },
-      { text: 'Braços e costas', value: 'Arms and back' },
-      { text: 'Corpo inteiro', value: 'Full body' },
+        { text: 'Barriga', value: 'Belly' },
+        { text: 'Braços flácidos', value: 'Flabby arms' },
+        { text: 'Nádegas flácidas', value: 'Sagging buttocks' },
+        { text: 'Gordura nos joelhos', value: 'Knee fat' },
+        { text: 'Seios caídos', value: 'Sagging breasts' },
+        { text: 'Queixo duplo', value: 'Double chin' },
+        { text: 'Traseiro de alforje', value: 'Saddlebag butt' },
+        { text: 'Nenhuma delas', value: 'None of them' }
     ],
     imagePlaceholder: smilingFitnessWoman,
   },
@@ -252,5 +244,3 @@ export const quizQuestions: QuizQuestion[] = [
     imagePlaceholder: smilingFitnessWoman,
   },
 ];
-
-    
