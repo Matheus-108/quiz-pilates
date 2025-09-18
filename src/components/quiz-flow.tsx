@@ -97,7 +97,7 @@ export default function QuizFlow() {
   
   const renderStep2Screen = () => (
       <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
-        <Button variant="destructive" className="mb-4 bg-[#E5398D] hover:bg-[#c22a7a] text-white font-bold">Atenção meninas</Button>
+        <Button variant="destructive" size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform mb-4">Atenção meninas</Button>
         <div className="relative w-full h-72 rounded-lg overflow-hidden shadow-md mb-4">
           <Image 
             src="https://i.imgur.com/Vv5qIiR.png" 
