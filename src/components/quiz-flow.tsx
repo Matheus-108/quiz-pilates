@@ -277,7 +277,7 @@ export default function QuizFlow() {
       </div>
 
       <h3 className="text-xl md:text-3xl font-bold pt-8">Conheça a especialista</h3>
-      <Image src="https://i.imgur.com/mllxplB.png" alt="Especialista" width={700} height={400} className="rounded-lg shadow-md" />
+      <Image src="https://i.imgur.com/n7Ptqht.png" alt="Especialista" width={700} height={400} className="rounded-lg shadow-md" />
 
       <p className="text-muted-foreground max-w-2xl">
         Camila Nakamoto é referência quando o assunto é menopausa e emagrecimento feminino. Depois de viver anos na Ásia, onde descobriu como o Pilates Ásiatico transformava a vida das mulheres, ela trouxe essa prática para o Brasil. E hoje ela vai ajudar você!
