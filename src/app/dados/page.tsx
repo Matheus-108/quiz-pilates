@@ -4,31 +4,31 @@ import { Eye, User, Users, TrendingUp, CheckCircle, ClipboardCheck } from 'lucid
 const kpis = [
     {
       title: 'Visitantes',
-      value: '925',
+      value: '0',
       description: 'Visitantes que acessaram o funil',
       icon: <Eye className="h-6 w-6 text-muted-foreground" />,
     },
     {
       title: 'Leads Adquiridos',
-      value: '555',
+      value: '0',
       description: 'Iniciaram alguma interação com o funil',
       icon: <Users className="h-6 w-6 text-muted-foreground" />,
     },
     {
       title: 'Taxa de Interação',
-      value: '60.0%',
+      value: '0.0%',
       description: 'Visitantes que interagiram com o funil',
       icon: <TrendingUp className="h-6 w-6 text-muted-foreground" />,
     },
     {
       title: 'Leads Qualificados',
-      value: '500',
+      value: '0',
       description: '+50% de etapas interagidas',
       icon: <CheckCircle className="h-6 w-6 text-muted-foreground" />,
     },
     {
       title: 'Fluxos Completos',
-      value: '201',
+      value: '0',
       description: 'Passaram da última etapa do funil',
       icon: <ClipboardCheck className="h-6 w-6 text-muted-foreground" />,
     },
