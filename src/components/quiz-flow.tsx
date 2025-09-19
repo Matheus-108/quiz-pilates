@@ -15,6 +15,13 @@ import { RadioGroup, RadioGroupItem } from './ui/radio-group';
 import { Label } from './ui/label';
 import { Checkbox } from './ui/checkbox';
 import TransparentCheckout from './transparent-checkout';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 
 
 export default function QuizFlow() {
@@ -270,11 +277,21 @@ export default function QuizFlow() {
       </a>
 
       <h3 className="text-xl md:text-3xl font-bold pt-8">🗣️ VEJA O QUE NOSSAS ALUNAS ESTÃO DIZENDO:</h3>
-      <div className="flex flex-col gap-4 w-full">
-        <Image src="https://i.imgur.com/HLaLzJQ.png" alt="Depoimento 1" width={700} height={150} className="rounded-lg shadow-md object-contain" />
-        <Image src="https://i.imgur.com/j5wY4i6.png" alt="Depoimento 2" width={700} height={150} className="rounded-lg shadow-md object-contain" />
-        <Image src="https://i.imgur.com/3VEnMKz.png" alt="Depoimento 3" width={700} height={150} className="rounded-lg shadow-md object-contain" />
-      </div>
+        <Carousel className="w-full max-w-xs sm:max-w-sm md:max-w-md">
+          <CarouselContent>
+            <CarouselItem>
+              <Image src="https://i.imgur.com/xJqzrdl.png" alt="Depoimento 1" width={700} height={150} className="rounded-lg shadow-md object-contain" />
+            </CarouselItem>
+            <CarouselItem>
+              <Image src="https://i.imgur.com/fkBMvJy.png" alt="Depoimento 2" width={700} height={150} className="rounded-lg shadow-md object-contain" />
+            </CarouselItem>
+            <CarouselItem>
+              <Image src="https://i.imgur.com/7c8oe8U.png" alt="Depoimento 3" width={700} height={150} className="rounded-lg shadow-md object-contain" />
+            </CarouselItem>
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
 
       <h3 className="text-xl md:text-3xl font-bold pt-8">Conheça a especialista</h3>
       <Image src="https://i.imgur.com/n7Ptqht.png" alt="Especialista" width={700} height={400} className="rounded-lg shadow-md" />
