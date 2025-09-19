@@ -368,7 +368,7 @@ export default function QuizFlow() {
             <ArrowLeft className="h-6 w-6" />
           </Button>
         )}
-        <Image src="https://i.imgur.com/aRAsQnJ.png" alt="MenoShape Quiz Logo" width={80} height={80} priority />
+        <Image src="https://i.imgur.com/VbvDRPC.jpeg" alt="MenoShape Quiz Logo" width={80} height={80} priority />
       </div>
       
       {shouldShowProgressBar && (
