@@ -36,15 +36,15 @@ export default function QuizFlow() {
 
   const [multiSelectAnswers, setMultiSelectAnswers] = useState<string[]>([]);
 
-  // We add 3 to totalQuestions to account for the new informational screens and the final warning screen.
-  const totalQuestions = quizQuestions.length + 3;
+  // We add 4 to totalQuestions to account for the new informational screens and the final warning screen.
+  const totalQuestions = quizQuestions.length + 4;
   const progressValue = isQuizStarted ? ((currentStep + 1) / totalQuestions) * 100 : 0;
   
   // Adjust question index to account for the informational screens
   let questionIndex = currentStep;
-  if (currentStep > 0) questionIndex--; // Account for step 2 info screen
-  if (currentStep > 2) questionIndex--; // Account for step 4 info screen
-  if (currentStep > 5) questionIndex--; // Account for step 7 info screen
+  if (currentStep > 1) questionIndex--; // Account for step 2 info screen
+  if (currentStep > 3) questionIndex--; // Account for step 4 info screen
+  if (currentStep > 6) questionIndex--; // Account for step 7 info screen
   
 
   const currentQuestion = quizQuestions[questionIndex];
@@ -67,9 +67,9 @@ export default function QuizFlow() {
       
       // Pre-populate multi-select answers when going back
       let prevQuestionIndex = currentStep - 1;
-      if (currentStep - 1 > 0) prevQuestionIndex--;
-      if (currentStep - 1 > 2) prevQuestionIndex--;
-      if (currentStep - 1 > 5) prevQuestionIndex--;
+      if (currentStep - 1 > 1) prevQuestionIndex--;
+      if (currentStep - 1 > 3) prevQuestionIndex--;
+      if (currentStep - 1 > 6) prevQuestionIndex--;
 
       const prevQuestion = quizQuestions[prevQuestionIndex];
       if (prevQuestion && prevQuestion.type === 'checkbox') {
@@ -226,17 +226,17 @@ export default function QuizFlow() {
   const renderWarningScreen = () => (
     <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
       <p className="text-xl font-semibold text-foreground mb-6">
-        ⚠️ Se você não agir agora, sua saúde e bem-estar podem piorar rapidamente!
-        <br/><br/>
-        A boa notícia é: ainda dá tempo de escolher o caminho certo.
+      ✨ Seu corpo pode começar a mudar em apenas 3 dias com a Pilates Asiática.
+      <br/><br/>
+      Se você começar a fazer a Pilates Asiática hoje você ficará mais saudável e jovem!
       </p>
-      <div className="relative w-full h-72 rounded-lg overflow-hidden shadow-md mb-4">
+      <div className="relative w-full h-72 rounded-lg overflow-hidden mb-4">
         <Image 
-          src="https://i.imgur.com/cGbt7Ct.png" 
+          src="https://i.imgur.com/woZ32hI.png" 
           alt="Mulher fazendo a escolha certa"
           width={400}
           height={288}
-          className="object-cover"
+          className="object-contain"
         />
       </div>
       <Button onClick={handleWarningContinue} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
@@ -310,7 +310,7 @@ export default function QuizFlow() {
                     ))}
                   </RadioGroup>
                 </div>
-                {shouldShowImage && (
+                {shouldShowImage && currentQuestion.imagePlaceholder && (
                     <div className="relative h-64 w-full rounded-lg overflow-hidden">
                         <Image
                             src={currentQuestion.imagePlaceholder.imageUrl}
@@ -485,5 +485,7 @@ export default function QuizFlow() {
     </div>
   );
 }
+
+    
 
     
