@@ -263,9 +263,11 @@ export default function QuizFlow() {
       <h2 className="text-2xl md:text-4xl font-bold">😱 TRANSFORME SEU CORPO HOJE COM APENAS 10 MINUTOS POR DIA!</h2>
       <Image src="https://i.imgur.com/uQuqLc8.png" alt="Transformação corporal" width={700} height={400} className="rounded-lg shadow-md" />
       
-      <Button onClick={generatePlan} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
-        Quero transformar meu corpo hoje!
-      </Button>
+      <a href="#checkout-section" className="w-full">
+        <Button asChild size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
+          <span>Quero transformar meu corpo hoje!</span>
+        </Button>
+      </a>
 
       <h3 className="text-xl md:text-3xl font-bold pt-8">🗣️ VEJA O QUE NOSSAS ALUNAS ESTÃO DIZENDO:</h3>
       <div className="flex flex-col gap-4 w-full">
@@ -292,11 +294,15 @@ export default function QuizFlow() {
 
       <Image src="https://i.imgur.com/uQuqLc8.png" alt="Transformação corporal" width={700} height={400} className="rounded-lg shadow-md" />
       
-      <Button onClick={generatePlan} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
-        Quero tomar a decisão certa!
-      </Button>
-
-      <TransparentCheckout />
+      <a href="#checkout-section" className="w-full">
+        <Button asChild size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
+          <span>Quero tomar a decisão certa!</span>
+        </Button>
+      </a>
+      
+      <div id="checkout-section">
+        <TransparentCheckout />
+      </div>
     </div>
   );
 
