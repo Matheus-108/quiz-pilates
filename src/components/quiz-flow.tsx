@@ -36,12 +36,17 @@ export default function QuizFlow() {
 
   const [multiSelectAnswers, setMultiSelectAnswers] = useState<string[]>([]);
 
-  // We add 2 to totalQuestions to account for the new informational screen and the final warning screen.
-  const totalQuestions = quizQuestions.length + 2;
+  // We add 3 to totalQuestions to account for the new informational screens and the final warning screen.
+  const totalQuestions = quizQuestions.length + 3;
   const progressValue = isQuizStarted ? ((currentStep + 1) / totalQuestions) * 100 : 0;
   
-  // Adjust question index to account for the new informational screen at step 1
-  const questionIndex = currentStep > 1 ? currentStep - 1 : currentStep;
+  // Adjust question index to account for the informational screens
+  let questionIndex = currentStep;
+  if (currentStep > 1) questionIndex--;
+  if (currentStep > 3) questionIndex--;
+  if (currentStep > 6) questionIndex--;
+
+
   const currentQuestion = quizQuestions[questionIndex];
   const isLastQuestion = questionIndex === quizQuestions.length - 1;
 
@@ -58,14 +63,30 @@ export default function QuizFlow() {
 
   const handleGoBack = () => {
     if (currentStep > 0) {
-       // When going back from the final warning screen, the question index needs to be handled correctly
-      const prevQuestionIndex = currentStep > 1 ? currentStep - 2 : currentStep -1;
+      let prevQuestionIndex = currentStep - 1;
+      if (currentStep > 1) prevQuestionIndex--;
+      if (currentStep > 3) prevQuestionIndex--;
+      if (currentStep > 6) prevQuestionIndex--;
+
+      // When going back from a question screen, we need to find the actual previous question
+      // This logic needs to be more robust
+      if (currentStep === 2 || currentStep === 4 || currentStep === 7) { // Coming from a question after an info screen
+        prevQuestionIndex--;
+      }
+      
+      setCurrentStep(currentStep - 1);
+      
       const prevQuestion = quizQuestions[prevQuestionIndex];
       if (prevQuestion && prevQuestion.type === 'checkbox') {
-        setMultiSelectAnswers(answers[prevQuestion.answerKey]?.split(', ') || []);
+        const answerKey = prevQuestion.answerKey;
+        // Need to get the correct answer from the state
+        const existingAnswer = answers[answerKey];
+        if (typeof existingAnswer === 'string') {
+          setMultiSelectAnswers(existingAnswer.split(', '));
+        }
       }
-      setCurrentStep(currentStep - 1);
-      setShowFinalStepScreen(false); // Go back from warning or final screen
+      
+      setShowFinalStepScreen(false);
     }
   };
   
@@ -180,6 +201,27 @@ export default function QuizFlow() {
         <Button onClick={handleInfoScreenContinue} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
             Continuar
         </Button>
+    </div>
+  );
+
+  const renderStep7InfoScreen = () => (
+    <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
+      <div className="relative w-full h-72 rounded-lg overflow-hidden shadow-md mb-4">
+        <Image
+          src="https://i.imgur.com/DmrMK1f.png"
+          alt="Mulher pensando nos resultados"
+          layout="fill"
+          objectFit="cover"
+        />
+      </div>
+      <p className="text-xl font-semibold text-foreground mb-6">
+        💡 78% das mulheres da sua idade sofrem com isso.
+        <br/><br/>
+        Quem age agora começa a ver resultados já nos primeiros dias!
+      </p>
+      <Button onClick={handleInfoScreenContinue} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
+        Continuar
+      </Button>
     </div>
   );
 
@@ -406,14 +448,12 @@ export default function QuizFlow() {
     if (showSalesPage) return renderSalesPage();
     if (showFinalStepScreen) return renderFinalStepScreen();
 
-    // After the first question, show the new info screen
     if (currentStep === 1) return renderInfoScreen();
-
-    // Show the new info screen at step 4
     if (currentStep === 3) return renderStep4InfoScreen();
+    if (currentStep === 6) return renderStep7InfoScreen();
     
     // After the last question, show the warning screen
-    if (currentStep === quizQuestions.length + 1) return renderWarningScreen();
+    if (currentStep === quizQuestions.length + 2) return renderWarningScreen();
     
     if (currentQuestion && currentQuestion.type === 'checkbox') return renderMultiSelectScreen();
     if (currentQuestion) return renderQuiz();
@@ -446,5 +486,3 @@ export default function QuizFlow() {
     </div>
   );
 }
-
-    
