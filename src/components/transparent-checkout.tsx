@@ -8,7 +8,9 @@ import { Input } from './ui/input';
 import { Loader2 } from 'lucide-react';
 
 export default function TransparentCheckout() {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [pixData, setPixData] = useState<any>(null);
@@ -36,8 +38,8 @@ export default function TransparentCheckout() {
   }, [pixData, isPaid]);
 
   const handleGeneratePix = async () => {
-    if (!email) {
-      setError('Por favor, insira seu melhor e-mail.');
+    if (!name || !email || !phone) {
+      setError('Por favor, preencha todos os campos.');
       return;
     }
     setError('');
@@ -149,12 +151,26 @@ export default function TransparentCheckout() {
         </ul>
       </div>
 
-      <div className="mt-6">
+      <div className="mt-6 space-y-4">
+        <Input
+          type="text"
+          placeholder="Seu nome completo"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="bg-gray-100 border-gray-300 focus:ring-green-500 focus:border-green-500"
+        />
         <Input
           type="email"
           placeholder="Seu melhor e-mail"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          className="bg-gray-100 border-gray-300 focus:ring-green-500 focus:border-green-500"
+        />
+        <Input
+          type="tel"
+          placeholder="Seu telefone com DDD"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
           className="bg-gray-100 border-gray-300 focus:ring-green-500 focus:border-green-500"
         />
         {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
