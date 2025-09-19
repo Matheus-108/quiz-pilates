@@ -14,6 +14,7 @@ import { Card, CardContent } from './ui/card';
 import { RadioGroup, RadioGroupItem } from './ui/radio-group';
 import { Label } from './ui/label';
 import { Checkbox } from './ui/checkbox';
+import TransparentCheckout from './transparent-checkout';
 
 
 export default function QuizFlow() {
@@ -280,7 +281,7 @@ export default function QuizFlow() {
       <h2 className="text-2xl md:text-4xl font-bold">😱 TRANSFORME SEU CORPO HOJE COM APENAS 10 MINUTOS POR DIA!</h2>
       <Image src="https://i.imgur.com/uQuqLc8.png" alt="Transformação corporal" width={700} height={400} className="rounded-lg shadow-md" />
       
-      <Button onClick={handleRestart} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
+      <Button onClick={generatePlan} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
         Quero transformar meu corpo hoje!
       </Button>
 
@@ -309,9 +310,11 @@ export default function QuizFlow() {
 
       <Image src="https://i.imgur.com/uQuqLc8.png" alt="Transformação corporal" width={700} height={400} className="rounded-lg shadow-md" />
       
-      <Button onClick={handleRestart} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
+      <Button onClick={generatePlan} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
         Quero tomar a decisão certa!
       </Button>
+
+      <TransparentCheckout />
     </div>
   );
 
