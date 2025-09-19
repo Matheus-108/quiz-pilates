@@ -213,7 +213,7 @@ export default function QuizFlow() {
                   </RadioGroup>
                 </div>
                 {shouldShowImage && (
-                    <div className="relative h-64 w-full rounded-lg overflow-hidden shadow-md">
+                    <div className="relative h-64 w-full rounded-lg overflow-hidden">
                         <Image
                             src={currentQuestion.imagePlaceholder.imageUrl}
                             alt={currentQuestion.imagePlaceholder.description}
