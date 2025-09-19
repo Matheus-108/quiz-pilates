@@ -147,7 +147,7 @@ export default function QuizFlow() {
         </Button>
         <div className="relative w-full h-72 rounded-lg overflow-hidden shadow-md mb-4">
             <Image 
-                src="https://i.imgur.com/MQSNdNr.jpeg" 
+                src="https://i.imgur.com/oJv0xYn.jpeg" 
                 alt="Mulher feliz se exercitando"
                 layout="fill"
                 objectFit="cover"
