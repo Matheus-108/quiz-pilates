@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Lock, Heart, Flame, MessageSquare, User, Copy, Check } from 'lucide-react';
+import { Lock, Heart, Flame, Copy, Check } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Loader2 } from 'lucide-react';
@@ -124,7 +124,7 @@ export default function TransparentCheckout() {
         </div>
         <h2 className="text-2xl font-bold mt-4 text-pink-500">Desbloquear Acesso</h2>
         <p className="text-4xl font-bold mt-2">
-          R$27,90 <span className="text-2xl text-gray-400 line-through">R$97,00</span>
+          R$27,90 <span className="text-2xl text-gray-400 line-through">R$197,00</span>
         </p>
         <p className="text-gray-600">Faça o pagamento PIX para liberar o acesso.</p>
       </div>
@@ -134,18 +134,10 @@ export default function TransparentCheckout() {
         <ul className="mt-2 space-y-2 text-sm">
           <li className="flex items-center gap-2">
             <Heart className="h-4 w-4 text-green-400" />
-            <span>WhatsApp pessoal da especialista</span>
-          </li>
-          <li className="flex items-center gap-2">
-            <Flame className="h-4 w-4 text-green-400" />
             <span>Aulas exclusivas</span>
           </li>
           <li className="flex items-center gap-2">
-            <MessageSquare className="h-4 w-4 text-green-400" />
-            <span>Chat sem limites 24h</span>
-          </li>
-          <li className="flex items-center gap-2">
-            <User className="h-4 w-4 text-green-400" />
+            <Flame className="h-4 w-4 text-green-400" />
             <span>Conteúdo personalizado</span>
           </li>
         </ul>
