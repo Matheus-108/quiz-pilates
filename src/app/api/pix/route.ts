@@ -22,12 +22,19 @@ export async function POST(request: Request) {
       }),
     });
 
-    const data = await response.json();
-
     if (!response.ok) {
-      return NextResponse.json({ error: data.message || 'Failed to create PIX transaction' }, { status: response.status });
+        let errorBody;
+        try {
+            errorBody = await response.json();
+        } catch (e) {
+            errorBody = await response.text();
+        }
+      console.error('PushInPay API Error:', errorBody);
+      const errorMessage = (typeof errorBody === 'object' && errorBody?.message) ? errorBody.message : 'Failed to create PIX transaction';
+      return NextResponse.json({ error: errorMessage }, { status: response.status });
     }
 
+    const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
     console.error('PIX generation error:', error);
