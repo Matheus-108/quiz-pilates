@@ -362,13 +362,13 @@ export default function QuizFlow() {
 
   return (
     <div className="w-full max-w-6xl mx-auto flex flex-col items-center gap-6">
-      <div className="relative w-full h-20 flex items-center justify-center mt-12">
+      <div className="relative w-full h-24 flex items-center justify-center mt-12">
         {shouldShowBackButton && (
           <Button onClick={handleGoBack} variant="ghost" size="icon" className="absolute left-0">
             <ArrowLeft className="h-6 w-6" />
           </Button>
         )}
-        <Image src="https://i.imgur.com/VbvDRPC.jpeg" alt="MenoShape Quiz Logo" width={80} height={80} priority />
+        <Image src="https://i.imgur.com/VbvDRPC.jpeg" alt="MenoShape Quiz Logo" width={96} height={96} priority />
       </div>
       
       {shouldShowProgressBar && (
