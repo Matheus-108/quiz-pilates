@@ -42,10 +42,10 @@ export default function QuizFlow() {
   
   // Adjust question index to account for the informational screens
   let questionIndex = currentStep;
-  if (currentStep > 1) questionIndex--;
-  if (currentStep > 3) questionIndex--;
-  if (currentStep > 6) questionIndex--;
-
+  if (currentStep > 0) questionIndex--; // Account for step 2 info screen
+  if (currentStep > 2) questionIndex--; // Account for step 4 info screen
+  if (currentStep > 5) questionIndex--; // Account for step 7 info screen
+  
 
   const currentQuestion = quizQuestions[questionIndex];
   const isLastQuestion = questionIndex === quizQuestions.length - 1;
@@ -63,27 +63,25 @@ export default function QuizFlow() {
 
   const handleGoBack = () => {
     if (currentStep > 0) {
-      let prevQuestionIndex = currentStep - 1;
-      if (currentStep > 1) prevQuestionIndex--;
-      if (currentStep > 3) prevQuestionIndex--;
-      if (currentStep > 6) prevQuestionIndex--;
-
-      // When going back from a question screen, we need to find the actual previous question
-      // This logic needs to be more robust
-      if (currentStep === 2 || currentStep === 4 || currentStep === 7) { // Coming from a question after an info screen
-        prevQuestionIndex--;
-      }
-      
       setCurrentStep(currentStep - 1);
       
+      // Pre-populate multi-select answers when going back
+      let prevQuestionIndex = currentStep - 1;
+      if (currentStep - 1 > 0) prevQuestionIndex--;
+      if (currentStep - 1 > 2) prevQuestionIndex--;
+      if (currentStep - 1 > 5) prevQuestionIndex--;
+
       const prevQuestion = quizQuestions[prevQuestionIndex];
       if (prevQuestion && prevQuestion.type === 'checkbox') {
         const answerKey = prevQuestion.answerKey;
-        // Need to get the correct answer from the state
         const existingAnswer = answers[answerKey];
-        if (typeof existingAnswer === 'string') {
+        if (typeof existingAnswer === 'string' && existingAnswer) {
           setMultiSelectAnswers(existingAnswer.split(', '));
+        } else {
+          setMultiSelectAnswers([]);
         }
+      } else {
+        setMultiSelectAnswers([]);
       }
       
       setShowFinalStepScreen(false);
@@ -277,7 +275,7 @@ export default function QuizFlow() {
 
   const renderQuiz = () => {
     // We don't want an image for questionIndex 1, 5, 6, 7, 8
-    const shouldShowImage = ![1, 5, 6, 7].includes(questionIndex);
+    const shouldShowImage = ![1, 4, 5, 6, 7].includes(questionIndex);
     
     return (
         <div key={currentStep} className="w-full animate-in fade-in-50 duration-500 text-center">
@@ -448,12 +446,13 @@ export default function QuizFlow() {
     if (showSalesPage) return renderSalesPage();
     if (showFinalStepScreen) return renderFinalStepScreen();
 
+    // The order of these checks is crucial and must match the quiz flow.
     if (currentStep === 1) return renderInfoScreen();
     if (currentStep === 3) return renderStep4InfoScreen();
     if (currentStep === 6) return renderStep7InfoScreen();
     
     // After the last question, show the warning screen
-    if (currentStep === quizQuestions.length + 2) return renderWarningScreen();
+    if (currentStep === quizQuestions.length + 3) return renderWarningScreen();
     
     if (currentQuestion && currentQuestion.type === 'checkbox') return renderMultiSelectScreen();
     if (currentQuestion) return renderQuiz();
@@ -486,3 +485,5 @@ export default function QuizFlow() {
     </div>
   );
 }
+
+    
