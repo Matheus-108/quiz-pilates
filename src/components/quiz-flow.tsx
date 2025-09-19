@@ -36,13 +36,15 @@ export default function QuizFlow() {
 
   const [multiSelectAnswers, setMultiSelectAnswers] = useState<string[]>([]);
 
-  // We add 1 to totalQuestions to account for the new informational screen.
-  const totalQuestions = quizQuestions.length + 1;
+  // We add 2 to totalQuestions to account for the new informational screen and the final warning screen.
+  const totalQuestions = quizQuestions.length + 2;
   const progressValue = isQuizStarted ? ((currentStep + 1) / totalQuestions) * 100 : 0;
   
-  const questionIndex = currentStep;
+  // Adjust question index to account for the new informational screen at step 1
+  const questionIndex = currentStep > 1 ? currentStep - 1 : currentStep;
   const currentQuestion = quizQuestions[questionIndex];
   const isLastQuestion = questionIndex === quizQuestions.length - 1;
+
 
   const handleRestart = () => {
     setPlan(null);
@@ -56,7 +58,9 @@ export default function QuizFlow() {
 
   const handleGoBack = () => {
     if (currentStep > 0) {
-      const prevQuestion = quizQuestions[currentStep - 1];
+       // When going back from the final warning screen, the question index needs to be handled correctly
+      const prevQuestionIndex = currentStep > 1 ? currentStep - 2 : currentStep -1;
+      const prevQuestion = quizQuestions[prevQuestionIndex];
       if (prevQuestion && prevQuestion.type === 'checkbox') {
         setMultiSelectAnswers(answers[prevQuestion.answerKey]?.split(', ') || []);
       }
@@ -104,6 +108,10 @@ export default function QuizFlow() {
     }
   };
 
+  const handleInfoScreenContinue = () => {
+    setCurrentStep(currentStep + 1);
+  };
+
   const handleWarningContinue = () => {
     setShowFinalStepScreen(true);
   }
@@ -131,6 +139,28 @@ export default function QuizFlow() {
       handleRestart();
     }
   };
+
+  const renderInfoScreen = () => (
+    <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
+        <Button size="lg" className="w-full mb-4 bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
+        ⚠️ Atenção meninas!
+        </Button>
+        <div className="relative w-full h-72 rounded-lg overflow-hidden shadow-md mb-4">
+            <Image 
+                src="https://i.imgur.com/MQSNdNr.jpeg" 
+                alt="Mulher feliz se exercitando"
+                layout="fill"
+                objectFit="cover"
+            />
+        </div>
+        <p className="text-xl font-semibold text-foreground mb-6">
+        ✨ Milhares de mulheres já eliminaram a gordura da menopausa, agora é a sua vez!
+        </p>
+        <Button onClick={handleInfoScreenContinue} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
+            Eu também consigo!
+        </Button>
+    </div>
+  );
 
   const renderWarningScreen = () => (
     <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
@@ -354,8 +384,12 @@ export default function QuizFlow() {
     if (plan) return renderPlan();
     if (showSalesPage) return renderSalesPage();
     if (showFinalStepScreen) return renderFinalStepScreen();
+
+    // After the first question, show the new info screen
+    if (currentStep === 1) return renderInfoScreen();
     // After the last question, show the warning screen
-    if (currentStep === quizQuestions.length) return renderWarningScreen();
+    if (currentStep === quizQuestions.length + 1) return renderWarningScreen();
+    
     if (currentQuestion && currentQuestion.type === 'checkbox') return renderMultiSelectScreen();
     if (currentQuestion) return renderQuiz();
 
