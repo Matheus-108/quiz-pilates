@@ -12,7 +12,7 @@ export async function POST(request: Request) {
     const response = await fetch('https://api.pushinpay.com.br/api/pix/cashIn', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${process.env.PUSHINPAY_API_KEY}`,
+        'Authorization': 'Bearer 47290|lT2mwn2QEObmPqwDMv9quB4ZSred60bl8jZjyx0M1fdacf7c',
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
@@ -54,7 +54,7 @@ export async function GET(request: Request) {
       const response = await fetch(`https://api.pushinpay.com.br/api/transactions/${id}`, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${process.env.PUSHINPAY_API_KEY}`,
+          'Authorization': 'Bearer 47290|lT2mwn2QEObmPqwDMv9quB4ZSred60bl8jZjyx0M1fdacf7c',
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         },
