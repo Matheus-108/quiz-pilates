@@ -22,7 +22,7 @@ export default function QuizFlow() {
   const [answers, setAnswers] = useState<Partial<PersonalizedFitnessPlanInput>>({});
   const [plan, setPlan] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [isQuizStarted, setIsQuizStarted] = useState(false);
+  const [isQuizStarted, setIsQuizStarted] = useState(true);
   const [showFinalStepScreen, setShowFinalStepScreen] = useState(false);
   const [showSalesPage, setShowSalesPage] = useState(false);
   const { toast } = useToast();
@@ -41,14 +41,10 @@ export default function QuizFlow() {
     setPlan(null);
     setAnswers({});
     setCurrentStep(0);
-    setIsQuizStarted(false);
+    setIsQuizStarted(true);
     setShowFinalStepScreen(false);
     setShowSalesPage(false);
     setMultiSelectAnswers([]);
-  };
-
-  const handleStartQuiz = () => {
-    setIsQuizStarted(true);
   };
 
   const handleGoBack = () => {
@@ -128,20 +124,6 @@ export default function QuizFlow() {
       handleRestart();
     }
   };
-
-  const renderInitialScreen = () => (
-    <div className="text-center animate-in fade-in duration-500 max-w-3xl">
-        <h1 className="text-3xl md:text-5xl font-black tracking-tight mb-4 leading-tight">
-        🤯 Queime a <span className="text-destructive">gordura</span> da menopausa com apenas <span className="text-destructive">10 minutos por dia...</span>
-        </h1>
-        <p className="text-lg md:text-xl text-muted-foreground mb-8">
-        👉 Responda o teste de <span className="font-bold text-foreground">2 minutos</span> e receba um <span className="font-bold text-foreground">plano personalizado!</span>
-        </p>
-        <Button onClick={handleStartQuiz} size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
-          INICIAR TESTE
-        </Button>
-    </div>
-  );
 
   const renderWarningScreen = () => (
     <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
@@ -345,7 +327,6 @@ export default function QuizFlow() {
   const shouldShowBackButton = isQuizStarted && currentStep > 0 && !plan && !isLoading && !showSalesPage;
   
   const renderContent = () => {
-    if (!isQuizStarted) return renderInitialScreen();
     if (isLoading) return renderLoading();
     if (plan) return renderPlan();
     if (showSalesPage) return renderSalesPage();
@@ -356,7 +337,7 @@ export default function QuizFlow() {
     if (currentQuestion) return renderQuiz();
 
     // Fallback or should not happen state
-    return renderInitialScreen();
+    return null;
   }
 
 
