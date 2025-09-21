@@ -197,26 +197,39 @@ export default function QuizFlow() {
     </div>
   );
 
-  const renderStep4InfoScreen = () => (
-    <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
-        <div className="relative w-full h-72 rounded-lg overflow-hidden shadow-md mb-4">
-            <Image 
-                src="https://i.imgur.com/MQSNdNr.jpeg"
-                alt="Mulher se exercitando"
-                layout="fill"
-                objectFit="cover"
-            />
-        </div>
-        <p className="text-xl text-foreground mb-6">
-          <span className="font-bold">🔥 10 minutos por dia...</span>
-          <br/><br/>
-          <span>💪 Começando a Pilates Asiática hoje, você vai queimar a gordura da menopausa!</span>
-        </p>
-        <Button onClick={handleInfoScreenContinue} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
-            Continuar
-        </Button>
-    </div>
-  );
+  const renderStep4InfoScreen = () => {
+    const mainGoal = answers.mainGoal;
+    let text = '💪 Começando a Pilates Asiática hoje, você vai queimar a gordura da menopausa!';
+    if (mainGoal === 'Maintain weight and get in shape') {
+      text = '🌸 Com a Pilates Asiática, você começa hoje a evitar o ganho de gordura da menopausa e continua em forma!';
+    } else if (mainGoal === 'Improve sleep and reduce stress') {
+      text = '🌙 Com a Pilates Asiática, você começa hoje a ter noites de sono tranquilas, livres da insônia e da tensão!';
+    } else if (mainGoal === 'Have more disposition and energy') {
+      text = '🌟 Com a Pilates Asiática, você começa hoje a melhorar a circulação, reduzir a fadiga e aumentar sua energia!';
+    }
+
+
+    return (
+      <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
+          <div className="relative w-full h-72 rounded-lg overflow-hidden shadow-md mb-4">
+              <Image 
+                  src="https://i.imgur.com/MQSNdNr.jpeg"
+                  alt="Mulher se exercitando"
+                  layout="fill"
+                  objectFit="cover"
+              />
+          </div>
+          <p className="text-xl text-foreground mb-6">
+            <span className="font-bold">🔥 10 minutos por dia...</span>
+            <br/><br/>
+            <span>{text}</span>
+          </p>
+          <Button onClick={handleInfoScreenContinue} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
+              Continuar
+          </Button>
+      </div>
+    );
+  }
 
   const renderStep7InfoScreen = () => (
     <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
@@ -526,6 +539,7 @@ export default function QuizFlow() {
     
 
     
+
 
 
 
