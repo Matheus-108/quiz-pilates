@@ -350,7 +350,7 @@ export default function QuizFlow() {
         </p>
         <div className="relative w-full h-72 rounded-lg overflow-hidden mb-2">
             <Image
-                src="https://i.imgur.com/woZ32hI.png"
+                src="https://i.imgur.com/DkLYZEp.png"
                 alt="Mulher fazendo a escolha certa"
                 width={400}
                 height={288}
