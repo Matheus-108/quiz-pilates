@@ -379,7 +379,7 @@ export default function QuizFlow() {
               checked={multiSelectAnswers.includes(option.value)}
               onCheckedChange={() => handleMultiSelectAnswer(option.value)}
             />
-            <span>{option.text}</span>
+            <span className="font-bold">{option.text}</span>
           </Label>
         ))}
       </div>
@@ -442,7 +442,7 @@ export default function QuizFlow() {
                         className="flex items-center space-x-2 cursor-pointer rounded-lg border bg-card text-card-foreground shadow-sm p-3 hover:bg-accent/50 transition-colors"
                       >
                         <RadioGroupItem value={option.value} id={option.value} />
-                        <span>{option.text}</span>
+                        <span className="font-bold">{option.text}</span>
                       </Label>
                     ))}
                   </RadioGroup>
