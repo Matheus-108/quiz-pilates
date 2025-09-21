@@ -480,7 +480,7 @@ export default function QuizFlow() {
       <h2 className="text-2xl md:text-4xl font-bold uppercase">
         🔥 10 minutos por dia é o suficiente para <span className="text-destructive">queimar a gordura e recuperar a energia!</span>
       </h2>
-      <Image src="https://i.imgur.com/7g2Frt7.png" alt="Comparação antes e depois" width={700} height={759} />
+      <Image src="https://i.imgur.com/ChtXZZA.png" alt="Comparação antes e depois" width={700} height={759} />
       
       <h3 className="text-xl md:text-3xl font-bold">👇 VEJA ALGUNS DOS MATERIAIS QUE VOCÊ VAI RECEBER NA PRÁTICA</h3>
       <div className="flex flex-col md:flex-row gap-4">
@@ -605,7 +605,7 @@ export default function QuizFlow() {
             <ArrowLeft className="h-6 w-6" />
           </Button>
         )}
-        <Image src="https://i.imgur.com/VbvDRPC.jpeg" alt="MenoShape Quiz Logo" width={96} height={96} priority />
+        <Image src="https://i.imgur.com/VbvDRPC.jpeg" alt="MenoShape Quiz Logo" width={96} height={96} priority className="rounded-full" />
       </div>
       
       {shouldShowProgressBar && (
