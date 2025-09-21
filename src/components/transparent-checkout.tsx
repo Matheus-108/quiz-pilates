@@ -175,9 +175,11 @@ export default function TransparentCheckout() {
       >
         {isLoading ? <Loader2 className="animate-spin" /> : 'Gerar PIX'}
       </Button>
-      <Button variant="link" className="w-full mt-2 text-gray-500 text-sm font-normal">
-        Pagar com cartão
-      </Button>
+      <a href="https://pay.kirvano.com/56cda513-e8f7-4c6c-9679-903293d395a4?utm_source=organic&utm_campaign=&utm_medium=&utm_content=&utm_term=" target="_blank" rel="noopener noreferrer" className="w-full">
+        <Button variant="link" className="w-full mt-2 text-gray-500 text-sm font-normal">
+            Pagar com cartão
+        </Button>
+      </a>
       <p className="text-xs text-center text-gray-400 mt-4">A PUSHIN PAY atua exclusivamente como processadora de pagamentos e não possui qualquer responsabilidade pela entrega, suporte, conteúdo, qualidade ou cumprimento das obrigações relacionadas aos produtos ou serviços oferecidos pelo vendedor.</p>
     </div>
   );
