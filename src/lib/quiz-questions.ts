@@ -65,19 +65,6 @@ export const quizQuestions: QuizQuestion[] = [
     imagePlaceholder: smilingFitnessWoman,
   },
   {
-    id: 'q3',
-    questionText: 'Quanto tempo você pode dedicar aos exercícios por dia?',
-    answerKey: 'timePerDay',
-    type: 'radio',
-    options: [
-      { text: 'Menos de 10 minutos', value: 'Less than 10 minutes' },
-      { text: '10-20 minutos', value: '10-20 minutes' },
-      { text: '20-30 minutos', value: '20-30 minutes' },
-      { text: 'Mais de 30 minutos', value: 'More than 30 minutes' },
-    ],
-    imagePlaceholder: smilingFitnessWoman,
-  },
-  {
     id: 'q4-multiselect',
     questionText: '🤔 Quais desses sintomas da menopausa você sente?',
     questionSubtitle: 'Selecione as opções que você mais se identifica:',
