@@ -191,10 +191,10 @@ export default function QuizFlow() {
                 objectFit="cover"
             />
         </div>
-        <p className="text-xl font-semibold text-foreground mb-6">
-        🔥 10 minutos por dia...
-        <br/><br/>
-        💪 Começando a Pilates Asiática hoje, você vai queimar a gordura da menopausa!
+        <p className="text-xl text-foreground mb-6">
+          <span className="font-bold">🔥 10 minutos por dia...</span>
+          <br/><br/>
+          <span>💪 Começando a Pilates Asiática hoje, você vai queimar a gordura da menopausa!</span>
         </p>
         <Button onClick={handleInfoScreenContinue} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
             Continuar
@@ -489,4 +489,5 @@ export default function QuizFlow() {
     
 
     
+
 
