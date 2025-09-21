@@ -39,17 +39,14 @@ export default function QuizFlow() {
   const [multiSelectAnswers, setMultiSelectAnswers] = useState<string[]>([]);
   const [weight, setWeight] = useState(75);
 
-  // We add 5 to totalQuestions to account for the new informational screens and the final warning/finalizing screen.
-  const totalQuestions = quizQuestions.length + 5;
+  const totalQuestions = quizQuestions.length + 4;
   const progressValue = isQuizStarted ? ((currentStep + 1) / totalQuestions) * 100 : 0;
   
-  // Adjust question index to account for the informational screens
   let questionIndex = currentStep;
-  if (currentStep > 1) questionIndex--; // Account for step 2 info screen
-  if (currentStep > 3) questionIndex--; // Account for step 4 info screen
-  if (currentStep > 6) questionIndex--; // Account for step 7 info screen
+  if (currentStep > 1) questionIndex--;
+  if (currentStep > 3) questionIndex--; 
+  if (currentStep > 6) questionIndex--;
   
-
   const currentQuestion = quizQuestions[questionIndex];
   const isLastQuestion = questionIndex === quizQuestions.length - 1;
 
@@ -70,7 +67,6 @@ export default function QuizFlow() {
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
       
-      // Pre-populate multi-select answers when going back
       let prevQuestionIndex = currentStep - 1;
       if (currentStep - 1 > 1) prevQuestionIndex--;
       if (currentStep - 1 > 3) prevQuestionIndex--;
@@ -101,7 +97,6 @@ export default function QuizFlow() {
     if (!isLastQuestion) {
       setCurrentStep(currentStep + 1);
     } else {
-      // Last question answered, show warning screen
       setCurrentStep(currentStep + 1);
     }
   };
@@ -123,12 +118,11 @@ export default function QuizFlow() {
     const question = currentQuestion;
     const newAnswers = { ...answers, [question.answerKey]: multiSelectAnswers.join(', ') };
     setAnswers(newAnswers);
-    setMultiSelectAnswers([]); // Reset for next multi-select question
+    setMultiSelectAnswers([]); 
     
     if (!isLastQuestion) {
       setCurrentStep(currentStep + 1);
     } else {
-       // Last question answered, show warning screen
       setCurrentStep(currentStep + 1);
     }
   };
@@ -141,7 +135,6 @@ export default function QuizFlow() {
     if (!isLastQuestion) {
       setCurrentStep(currentStep + 1);
     } else {
-       // Last question answered, show warning screen
       setCurrentStep(currentStep + 1);
     }
   };
@@ -173,7 +166,6 @@ export default function QuizFlow() {
         title: 'Erro ao gerar plano',
         description: result.error || 'Não foi possível gerar seu plano. Por favor, tente novamente.',
       });
-      // Reset state to start over
       handleRestart();
     }
   };
@@ -411,7 +403,6 @@ export default function QuizFlow() {
 
 
   const renderQuiz = () => {
-    // We don't want an image for questionIndex 1, 5, 6, 7, 8
     const shouldShowImage = ![1, 4, 5, 6, 7].includes(questionIndex);
     
     return (
@@ -486,8 +477,10 @@ export default function QuizFlow() {
 
   const renderSalesPage = () => (
     <div className="w-full max-w-3xl text-center animate-in fade-in duration-500 flex flex-col items-center gap-8">
-      <h2 className="text-2xl md:text-4xl font-bold">🔥 10 MINUTOS POR DIA É O SUFICIENTE PARA QUEIMAR A GORDURA E RECUPERAR A ENERGIA!</h2>
-      <Image src="https://i.imgur.com/ChtXZZA.png" alt="Mulher se exercitando" width={700} height={400} className="rounded-lg shadow-md" />
+      <h2 className="text-2xl md:text-4xl font-bold uppercase">
+        🔥 10 minutos por dia é o suficiente para <span className="text-destructive">queimar a gordura e recuperar a energia!</span>
+      </h2>
+      <Image src="https://i.imgur.com/7g2Frt7.png" alt="Comparação antes e depois" width={700} height={759} />
       
       <h3 className="text-xl md:text-3xl font-bold">👇 VEJA ALGUNS DOS MATERIAIS QUE VOCÊ VAI RECEBER NA PRÁTICA</h3>
       <div className="flex flex-col md:flex-row gap-4">
@@ -500,9 +493,6 @@ export default function QuizFlow() {
         <Image src="https://i.imgur.com/CPR4yiz.png" alt="Presente 1" width={340} height={340} className="rounded-lg shadow-md" />
         <Image src="https://i.imgur.com/OHLq4Mu.png" alt="Presente 2" width={340} height={340} className="rounded-lg shadow-md" />
       </div>
-
-      <h2 className="text-2xl md:text-4xl font-bold">😱 TRANSFORME SEU CORPO HOJE COM APENAS 10 MINUTOS POR DIA!</h2>
-      <Image src="https://i.imgur.com/uQuqLc8.png" alt="Transformação corporal" width={700} height={400} className="rounded-lg shadow-md" />
       
       <a href="#checkout-section" className="w-full">
         <Button asChild size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
@@ -630,3 +620,5 @@ export default function QuizFlow() {
     </div>
   );
 }
+
+    
