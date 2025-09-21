@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { ArrowLeft, Loader2, Scale, BarChart, Star } from 'lucide-react';
+import { ArrowLeft, Loader2, Scale, BarChart, Star, AlertTriangle, Briefcase } from 'lucide-react';
 import { quizQuestions, type QuizQuestion, type QuizOption } from '@/lib/quiz-questions';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
@@ -32,6 +32,7 @@ export default function QuizFlow() {
   const [isLoading, setIsLoading] = useState(false);
   const [isQuizStarted, setIsQuizStarted] = useState(true);
   const [showFinalizingScreen, setShowFinalizingScreen] = useState(false);
+  const [showWarningScreen2, setShowWarningScreen2] = useState(false);
   const [showFinalStepScreen, setShowFinalStepScreen] = useState(false);
   const [showSalesPage, setShowSalesPage] = useState(false);
   const { toast } = useToast();
@@ -57,6 +58,7 @@ export default function QuizFlow() {
     setCurrentStep(0);
     setIsQuizStarted(true);
     setShowFinalizingScreen(false);
+    setShowWarningScreen2(false);
     setShowFinalStepScreen(false);
     setShowSalesPage(false);
     setMultiSelectAnswers([]);
@@ -86,6 +88,7 @@ export default function QuizFlow() {
       }
       
       setShowFinalizingScreen(false);
+      setShowWarningScreen2(false);
       setShowFinalStepScreen(false);
     }
   };
@@ -146,6 +149,12 @@ export default function QuizFlow() {
   const handleWarningContinue = () => {
     setShowFinalizingScreen(true);
   }
+
+  const handleWarning2Continue = () => {
+    setShowWarningScreen2(false);
+    setShowFinalStepScreen(true);
+  };
+
 
   const handleShowSalesPage = () => {
     setShowFinalStepScreen(false);
@@ -260,7 +269,7 @@ export default function QuizFlow() {
     useEffect(() => {
       const timer = setTimeout(() => {
         setShowFinalizingScreen(false);
-        setShowFinalStepScreen(true);
+        setShowWarningScreen2(true);
       }, 6000);
   
       const interval1 = setInterval(() => setProgress1(100), 500);
@@ -349,6 +358,38 @@ export default function QuizFlow() {
             />
         </div>
         <Button onClick={handleWarningContinue} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
+            Continuar
+        </Button>
+    </div>
+);
+
+const renderWarningScreen2 = () => (
+    <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center gap-4">
+        <h2 className="text-xl md:text-2xl font-bold text-center">
+            <AlertTriangle className="inline-block h-6 w-6 text-yellow-500 mb-1 mr-1" />
+            Se você não agir agora, sua saúde e bem-estar podem <span className="text-destructive">piorar rapidamente!</span>
+        </h2>
+
+        <p className="text-lg">
+            A boa notícia é: ainda dá tempo de escolher o caminho certo.
+        </p>
+
+        <div className="relative w-full">
+            <Image
+                src="https://i.imgur.com/crhVA5P.png"
+                alt="Gráfico mostrando as escolhas"
+                width={500}
+                height={350}
+                className="object-contain"
+            />
+        </div>
+
+        <p className="text-lg font-bold">
+            <Briefcase className="inline-block h-5 w-5 text-yellow-600 mb-1 mr-1" />
+            O que você decidir agora vai definir como será sua menopausa e <span className="font-bold">seu futuro.</span>
+        </p>
+
+        <Button onClick={handleWarning2Continue} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
             Continuar
         </Button>
     </div>
@@ -570,13 +611,14 @@ export default function QuizFlow() {
     </Card>
   );
   
-  const shouldShowProgressBar = (isQuizStarted || plan || showFinalStepScreen || showSalesPage || showFinalizingScreen) && !isLoading;
-  const shouldShowBackButton = isQuizStarted && currentStep > 0 && !plan && !isLoading && !showSalesPage && !showFinalizingScreen;
+  const shouldShowProgressBar = (isQuizStarted || plan || showFinalStepScreen || showSalesPage || showFinalizingScreen || showWarningScreen2) && !isLoading;
+  const shouldShowBackButton = isQuizStarted && currentStep > 0 && !plan && !isLoading && !showSalesPage && !showFinalizingScreen && !showWarningScreen2;
   
   const renderContent = () => {
     if (isLoading) return renderLoading();
     if (plan) return renderPlan();
     if (showSalesPage) return renderSalesPage();
+    if (showWarningScreen2) return renderWarningScreen2();
     if (showFinalizingScreen) return <FinalizingScreen />;
     if (showFinalStepScreen) return renderFinalStepScreen();
 
@@ -620,5 +662,3 @@ export default function QuizFlow() {
     </div>
   );
 }
-
-    
