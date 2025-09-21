@@ -647,7 +647,7 @@ const renderWarningScreen2 = () => (
             <ArrowLeft className="h-6 w-6" />
           </Button>
         )}
-        <Image src="https://i.imgur.com/VbvDRPC.jpeg" alt="MenoShape Quiz Logo" width={96} height={96} priority className="rounded-full" />
+        <Image src="https://i.imgur.com/VbvDRPC.jpeg" alt="MenoShape Quiz Logo" width={96} height={96} priority className="rounded-2xl" />
       </div>
       
       {shouldShowProgressBar && (
