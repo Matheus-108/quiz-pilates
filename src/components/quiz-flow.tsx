@@ -172,8 +172,8 @@ export default function QuizFlow() {
                 objectFit="cover"
             />
         </div>
-        <p className="text-xl font-semibold text-foreground mb-6">
-        ✨ Milhares de mulheres já eliminaram a gordura da menopausa, agora é a sua vez!
+        <p className="text-xl text-foreground mb-6">
+        ✨ <span className="font-bold">Milhares</span> de mulheres já eliminaram a gordura da menopausa, agora é a sua vez!
         </p>
         <Button onClick={handleInfoScreenContinue} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
             Eu também consigo!
