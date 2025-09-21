@@ -175,6 +175,9 @@ export default function TransparentCheckout() {
       >
         {isLoading ? <Loader2 className="animate-spin" /> : 'Gerar PIX'}
       </Button>
+      <Button variant="link" className="w-full mt-2 text-gray-500 text-sm font-normal">
+        Pagar com cartão
+      </Button>
       <p className="text-xs text-center text-gray-400 mt-4">A PUSHIN PAY atua exclusivamente como processadora de pagamentos e não possui qualquer responsabilidade pela entrega, suporte, conteúdo, qualidade ou cumprimento das obrigações relacionadas aos produtos ou serviços oferecidos pelo vendedor.</p>
     </div>
   );
