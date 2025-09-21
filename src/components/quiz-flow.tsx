@@ -282,7 +282,7 @@ export default function QuizFlow() {
             {currentStep === 0 && (
               <div className="mb-8">
                 <h1 className="text-3xl md:text-5xl font-black tracking-tight mb-4 leading-tight">
-                  🤯 Queime a <span className="text-destructive">gordura</span> da menopausa com apenas <span className="text-destructive">10 minutos por dia...</span>
+                  🤯 Queime a <span className="text-destructive">gordura</span> da menopausa com <span className="text-destructive">10 minutos</span> por dia...
                 </h1>
                 <p className="text-lg md:text-xl text-muted-foreground">
                   👉 Responda o teste de <span className="font-bold text-foreground">2 minutos</span> e receba um <span className="font-bold text-foreground">plano personalizado!</span>
@@ -489,3 +489,4 @@ export default function QuizFlow() {
     
 
     
+
