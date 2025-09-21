@@ -254,25 +254,26 @@ export default function QuizFlow() {
 
   const renderWarningScreen = () => (
     <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
-      <p className="text-xl font-semibold text-foreground mb-6">
-      ✨ Seu corpo pode começar a mudar em apenas 3 dias com a Pilates Asiática.
-      <br/><br/>
-      Se você começar a fazer a Pilates Asiática hoje você ficará mais saudável e jovem!
-      </p>
-      <div className="relative w-full h-72 rounded-lg overflow-hidden mb-4">
-        <Image 
-          src="https://i.imgur.com/woZ32hI.png" 
-          alt="Mulher fazendo a escolha certa"
-          width={400}
-          height={288}
-          className="object-contain"
-        />
-      </div>
-      <Button onClick={handleWarningContinue} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
-        Continuar
-      </Button>
+        <p className="text-xl font-bold text-foreground mb-2">
+            ✨ Seu corpo pode começar a mudar em apenas 3 dias com a Pilates Asiática.
+        </p>
+        <p className="text-foreground/90 mb-6">
+            Se você começar a fazer a Pilates Asiática hoje você ficará mais saudável e jovem!
+        </p>
+        <div className="relative w-full h-72 rounded-lg overflow-hidden mb-2">
+            <Image
+                src="https://i.imgur.com/woZ32hI.png"
+                alt="Mulher fazendo a escolha certa"
+                width={400}
+                height={288}
+                className="object-contain"
+            />
+        </div>
+        <Button onClick={handleWarningContinue} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
+            Continuar
+        </Button>
     </div>
-  );
+);
   
 
   const renderMultiSelectScreen = () => (
@@ -539,6 +540,7 @@ export default function QuizFlow() {
     
 
     
+
 
 
 
