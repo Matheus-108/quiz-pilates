@@ -466,14 +466,20 @@ export default function QuizFlow() {
 
   const renderFinalStepScreen = () => (
     <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
-      <h2 className="text-2xl md:text-3xl font-bold mb-4">🌸 Seu plano personalizado já está pronto!</h2>
-      <p className="text-lg text-muted-foreground mb-8">
-        Ele foi desenvolvido a partir das suas respostas e está 100% adaptado ao seu corpo, à sua rotina e às suas dores.
-        <br/><br/>
+      <h2 className="text-2xl md:text-3xl font-bold mb-4 flex items-center justify-center gap-2">
+        🌸 Seu plano personalizado <br /> já está pronto!
+      </h2>
+      <p className="text-lg text-foreground mb-4">
+        Ele foi desenvolvido a partir das suas respostas e está{' '}
+        <span className="font-bold">
+          100% adaptado ao seu corpo, à sua rotina e às suas dores.
+        </span>
+      </p>
+      <p className="text-lg text-foreground mb-8">
         👉 Clique no botão abaixo e comece a fazer a Pilates Asiática ainda hoje!
       </p>
       <Button onClick={handleShowSalesPage} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
-      ✅ Ver meu plano personalizado!
+        <span className="mr-2">✅</span> Ver meu plano personalizado!
       </Button>
     </div>
   );
