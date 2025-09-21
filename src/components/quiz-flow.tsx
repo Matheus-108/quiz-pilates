@@ -241,9 +241,10 @@ export default function QuizFlow() {
           objectFit="cover"
         />
       </div>
-      <p className="text-xl font-semibold text-foreground mb-6">
+      <p className="text-xl font-bold text-foreground mb-2">
         💡 78% das mulheres da sua idade sofrem com isso.
-        <br/><br/>
+      </p>
+      <p className="text-xl text-foreground mb-6">
         Quem age agora começa a ver resultados já nos primeiros dias!
       </p>
       <Button onClick={handleInfoScreenContinue} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
@@ -540,6 +541,7 @@ export default function QuizFlow() {
     
 
     
+
 
 
 
