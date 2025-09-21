@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { ArrowLeft, Loader2 } from 'lucide-react';
+import { ArrowLeft, Loader2, Scale } from 'lucide-react';
 import { quizQuestions, type QuizQuestion, type QuizOption } from '@/lib/quiz-questions';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
@@ -15,6 +15,7 @@ import { RadioGroup, RadioGroupItem } from './ui/radio-group';
 import { Label } from './ui/label';
 import { Checkbox } from './ui/checkbox';
 import TransparentCheckout from './transparent-checkout';
+import { Slider } from '@/components/ui/slider';
 import {
   Carousel,
   CarouselContent,
@@ -35,6 +36,7 @@ export default function QuizFlow() {
   const { toast } = useToast();
 
   const [multiSelectAnswers, setMultiSelectAnswers] = useState<string[]>([]);
+  const [weight, setWeight] = useState(75);
 
   // We add 4 to totalQuestions to account for the new informational screens and the final warning screen.
   const totalQuestions = quizQuestions.length + 4;
@@ -59,6 +61,7 @@ export default function QuizFlow() {
     setShowFinalStepScreen(false);
     setShowSalesPage(false);
     setMultiSelectAnswers([]);
+    setWeight(75);
   };
 
   const handleGoBack = () => {
@@ -119,6 +122,19 @@ export default function QuizFlow() {
     setAnswers(newAnswers);
     setMultiSelectAnswers([]); // Reset for next multi-select question
     
+    if (!isLastQuestion) {
+      setCurrentStep(currentStep + 1);
+    } else {
+       // Last question answered, show warning screen
+      setCurrentStep(currentStep + 1);
+    }
+  };
+
+  const handleSliderContinue = () => {
+    const question = currentQuestion;
+    const newAnswers = { ...answers, [question.answerKey]: `${weight}kg` };
+    setAnswers(newAnswers);
+
     if (!isLastQuestion) {
       setCurrentStep(currentStep + 1);
     } else {
@@ -267,6 +283,26 @@ export default function QuizFlow() {
         ))}
       </div>
       <Button onClick={handleMultiSelectContinue} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
+        Continuar
+      </Button>
+    </div>
+  );
+  
+  const renderSliderScreen = () => (
+    <div className="w-full max-w-xs text-center animate-in fade-in duration-500 flex flex-col items-center">
+      <Scale className="h-10 w-10 mb-4 text-gray-700" />
+      <h2 className="text-2xl md:text-3xl font-bold mb-4">{currentQuestion.questionText}</h2>
+      <p className="text-5xl font-bold text-destructive my-6">{weight} kg</p>
+      <Slider
+        defaultValue={[75]}
+        max={150}
+        min={30}
+        step={1}
+        onValueChange={(value) => setWeight(value[0])}
+        className="w-full my-6"
+      />
+      <p className="text-muted-foreground mb-8">Arraste para ajustar</p>
+      <Button onClick={handleSliderContinue} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
         Continuar
       </Button>
     </div>
@@ -455,6 +491,7 @@ export default function QuizFlow() {
     if (currentStep === quizQuestions.length + 3) return renderWarningScreen();
     
     if (currentQuestion && currentQuestion.type === 'checkbox') return renderMultiSelectScreen();
+    if (currentQuestion && currentQuestion.type === 'slider') return renderSliderScreen();
     if (currentQuestion) return renderQuiz();
 
     // Fallback or should not happen state
@@ -489,5 +526,6 @@ export default function QuizFlow() {
     
 
     
+
 
 

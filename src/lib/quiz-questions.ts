@@ -22,7 +22,7 @@ export interface QuizQuestion {
     | 'dietExperience'
     | 'dietaryRestrictions'
     | 'menopauseSymptoms';
-  type?: 'radio' | 'checkbox';
+  type?: 'radio' | 'checkbox' | 'slider';
   questionSubtitle?: string;
 }
 
@@ -144,14 +144,8 @@ export const quizQuestions: QuizQuestion[] = [
     id: 'q8',
     questionText: 'Quanto você pesa?',
     answerKey: 'dietExperience',
-    type: 'radio',
-    options: [
-      { text: '50kg a 60kg', value: '50kg to 60kg' },
-      { text: '61kg a 70kg', value: '61kg to 70kg' },
-      { text: '71kg a 80kg', value: '71kg to 80kg' },
-      { text: '81kg a 90kg', value: '81kg to 90kg' },
-      { text: 'Mais de 100kg', value: 'More than 100kg' },
-    ],
+    type: 'slider',
+    options: [],
     imagePlaceholder: smilingFitnessWoman,
   },
 ];
