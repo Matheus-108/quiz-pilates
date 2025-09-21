@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { ArrowLeft, Loader2, Scale } from 'lucide-react';
+import { ArrowLeft, Loader2, Scale, BarChart, Star } from 'lucide-react';
 import { quizQuestions, type QuizQuestion, type QuizOption } from '@/lib/quiz-questions';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
@@ -31,6 +31,7 @@ export default function QuizFlow() {
   const [plan, setPlan] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isQuizStarted, setIsQuizStarted] = useState(true);
+  const [showFinalizingScreen, setShowFinalizingScreen] = useState(false);
   const [showFinalStepScreen, setShowFinalStepScreen] = useState(false);
   const [showSalesPage, setShowSalesPage] = useState(false);
   const { toast } = useToast();
@@ -38,8 +39,8 @@ export default function QuizFlow() {
   const [multiSelectAnswers, setMultiSelectAnswers] = useState<string[]>([]);
   const [weight, setWeight] = useState(75);
 
-  // We add 4 to totalQuestions to account for the new informational screens and the final warning screen.
-  const totalQuestions = quizQuestions.length + 4;
+  // We add 5 to totalQuestions to account for the new informational screens and the final warning/finalizing screen.
+  const totalQuestions = quizQuestions.length + 5;
   const progressValue = isQuizStarted ? ((currentStep + 1) / totalQuestions) * 100 : 0;
   
   // Adjust question index to account for the informational screens
@@ -58,6 +59,7 @@ export default function QuizFlow() {
     setAnswers({});
     setCurrentStep(0);
     setIsQuizStarted(true);
+    setShowFinalizingScreen(false);
     setShowFinalStepScreen(false);
     setShowSalesPage(false);
     setMultiSelectAnswers([]);
@@ -87,6 +89,7 @@ export default function QuizFlow() {
         setMultiSelectAnswers([]);
       }
       
+      setShowFinalizingScreen(false);
       setShowFinalStepScreen(false);
     }
   };
@@ -148,7 +151,7 @@ export default function QuizFlow() {
   };
 
   const handleWarningContinue = () => {
-    setShowFinalStepScreen(true);
+    setShowFinalizingScreen(true);
   }
 
   const handleShowSalesPage = () => {
@@ -189,7 +192,7 @@ export default function QuizFlow() {
             />
         </div>
         <p className="text-xl text-foreground mb-6">
-        ✨ <span className="font-bold">Milhares</span> de mulheres já eliminaram a gordura da menopausa, agora é a sua vez!
+          <span className="font-bold">✨ Milhares</span> de mulheres já eliminaram a gordura da menopausa, agora é a sua vez!
         </p>
         <Button onClick={handleInfoScreenContinue} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
             Eu também consigo!
@@ -199,13 +202,17 @@ export default function QuizFlow() {
 
   const renderStep4InfoScreen = () => {
     const mainGoal = answers.mainGoal;
-    let text = '💪 Começando a Pilates Asiática hoje, você vai queimar a gordura da menopausa!';
+    let text = 'Começando a Pilates Asiática hoje, você vai queimar a gordura da menopausa!';
+    let emoji = '💪';
     if (mainGoal === 'Maintain weight and get in shape') {
-      text = '🌸 Com a Pilates Asiática, você começa hoje a evitar o ganho de gordura da menopausa e continua em forma!';
+      text = 'Com a Pilates Asiática, você começa hoje a evitar o ganho de gordura da menopausa e continua em forma!';
+      emoji = '🌸';
     } else if (mainGoal === 'Improve sleep and reduce stress') {
-      text = '🌙 Com a Pilates Asiática, você começa hoje a ter noites de sono tranquilas, livres da insônia e da tensão!';
+      text = 'Com a Pilates Asiática, você começa hoje a ter noites de sono tranquilas, livres da insônia e da tensão!';
+      emoji = '🌙';
     } else if (mainGoal === 'Have more disposition and energy') {
-      text = '🌟 Com a Pilates Asiática, você começa hoje a melhorar a circulação, reduzir a fadiga e aumentar sua energia!';
+      text = 'Com a Pilates Asiática, você começa hoje a melhorar a circulação, reduzir a fadiga e aumentar sua energia!';
+      emoji = '🌟';
     }
 
 
@@ -222,7 +229,7 @@ export default function QuizFlow() {
           <p className="text-xl text-foreground mb-6">
             <span className="font-bold">🔥 10 minutos por dia...</span>
             <br/><br/>
-            <span>{text}</span>
+            <span>{emoji} {text}</span>
           </p>
           <Button onClick={handleInfoScreenContinue} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
               Continuar
@@ -252,13 +259,92 @@ export default function QuizFlow() {
       </Button>
     </div>
   );
+  
+  const FinalizingScreen = () => {
+    const [progress1, setProgress1] = useState(0);
+    const [progress2, setProgress2] = useState(0);
+    const [progress3, setProgress3] = useState(0);
+  
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        setShowFinalizingScreen(false);
+        setShowFinalStepScreen(true);
+      }, 6000);
+  
+      const interval1 = setInterval(() => setProgress1(100), 500);
+      const interval2 = setInterval(() => setProgress2(64), 2500);
+      const interval3 = setInterval(() => setProgress3(80), 4500);
+  
+      return () => {
+        clearTimeout(timer);
+        clearInterval(interval1);
+        clearInterval(interval2);
+        clearInterval(interval3);
+      };
+    }, []);
+  
+    return (
+      <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
+        <h2 className="text-2xl md:text-3xl font-bold mb-8 flex items-center gap-3">
+          <BarChart className="h-8 w-8" /> Finalizando seu plano...
+        </h2>
+  
+        <div className="w-full space-y-6">
+          <div className="text-left">
+            <div className="flex justify-between mb-1">
+              <span className="font-medium">Analisando suas respostas...</span>
+              <span className="text-primary font-bold">{progress1}%</span>
+            </div>
+            <Progress value={progress1} className="h-4 [&>div]:bg-primary" />
+          </div>
+          <div className="text-left">
+            <div className="flex justify-between mb-1">
+              <span className="font-medium">Adicionando os últimos detalhes do seu plano...</span>
+              <span className="text-primary font-bold">{progress2 > 0 ? `${progress2}%` : ''}</span>
+            </div>
+            <Progress value={progress2} className="h-4 [&>div]:bg-primary" />
+          </div>
+          <div className="text-left">
+            <div className="flex justify-between mb-1">
+              <span className="font-medium">Montando a melhor estratégia...</span>
+              <span className="text-primary font-bold">{progress3 > 0 ? `${progress3}%` : ''}</span>
+            </div>
+            <Progress value={progress3} className="h-4 [&>div]:bg-primary" />
+          </div>
+        </div>
+  
+        <div className="w-full mt-10 space-y-4">
+          <Card className="text-left">
+            <CardContent className="p-4">
+              <div className="flex text-yellow-400 mb-2">
+                <Star className="fill-current" /> <Star className="fill-current" /> <Star className="fill-current" /> <Star className="fill-current" /> <Star className="fill-current" />
+              </div>
+              <p className="font-bold">Juliana Nascimento</p>
+              <p className="text-sm text-muted-foreground mb-2">@juliananascimento34</p>
+              <p className="text-foreground/90">Adorei o plano personalizado. 2 semanas e meu marido já percebeu a diferença também. O treinamento é bem didático e facil.</p>
+            </CardContent>
+          </Card>
+          <Card className="text-left">
+            <CardContent className="p-4">
+              <div className="flex text-yellow-400 mb-2">
+                <Star className="fill-current" /> <Star className="fill-current" /> <Star className="fill-current" /> <Star className="fill-current" /> <Star className="fill-current" />
+              </div>
+              <p className="font-bold">Katia Martins</p>
+              <p className="text-sm text-muted-foreground mb-2">@kakamartins</p>
+              <p className="text-foreground/90">Nunca gostei desse exercícios da internet, mas essa pilates asiática, superou minhas espectativas. Comecei essa semana, mas já estou vendo muito resultado.</p>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  };
 
   const renderWarningScreen = () => (
     <div className="w-full max-w-lg text-center animate-in fade-in duration-500 flex flex-col items-center">
         <p className="text-xl font-bold text-foreground mb-2">
             ✨ Seu corpo pode começar a mudar em apenas 3 dias com a Pilates Asiática.
         </p>
-        <p className="text-foreground/90 mb-6">
+        <p className="text-foreground/90 mb-2">
             Se você começar a fazer a Pilates Asiática hoje você ficará mais saudável e jovem!
         </p>
         <div className="relative w-full h-72 rounded-lg overflow-hidden mb-2">
@@ -333,7 +419,7 @@ export default function QuizFlow() {
             {currentStep === 0 && (
               <div className="mb-8">
                 <h1 className="text-3xl md:text-5xl font-black tracking-tight mb-4 leading-tight">
-                  🤯 Queime a <span className="text-destructive">gordura</span> da menopausa com <span className="text-destructive">10 minutos</span> por dia...
+                  🤯 Queime a <span className="text-destructive">gordura</span> da menopausa com <span className="text-destructive">10 minutos</span> por dia
                 </h1>
                 <p className="text-lg md:text-xl text-muted-foreground">
                   👉 Responda o teste de <span className="font-bold text-foreground">2 minutos</span> e receba um <span className="font-bold text-foreground">plano personalizado!</span>
@@ -488,13 +574,14 @@ export default function QuizFlow() {
     </Card>
   );
   
-  const shouldShowProgressBar = (isQuizStarted || plan || showFinalStepScreen || showSalesPage) && !isLoading;
-  const shouldShowBackButton = isQuizStarted && currentStep > 0 && !plan && !isLoading && !showSalesPage;
+  const shouldShowProgressBar = (isQuizStarted || plan || showFinalStepScreen || showSalesPage || showFinalizingScreen) && !isLoading;
+  const shouldShowBackButton = isQuizStarted && currentStep > 0 && !plan && !isLoading && !showSalesPage && !showFinalizingScreen;
   
   const renderContent = () => {
     if (isLoading) return renderLoading();
     if (plan) return renderPlan();
     if (showSalesPage) return renderSalesPage();
+    if (showFinalizingScreen) return <FinalizingScreen />;
     if (showFinalStepScreen) return renderFinalStepScreen();
 
     // The order of these checks is crucial and must match the quiz flow.
@@ -537,13 +624,3 @@ export default function QuizFlow() {
     </div>
   );
 }
-
-    
-
-    
-
-
-
-
-
-
