@@ -620,14 +620,14 @@ const renderWarningScreen2 = () => (
           <CarouselNext />
         </Carousel>
 
-      <h3 className="text-xl md:text-3xl font-bold pt-8">Conheça a especialista</h3>
+      <h3 className="text-xl md:text-3xl font-bold pt-8">👩‍⚕️ CONHEÇA A ESPECIALISTA</h3>
       <Image src="https://i.imgur.com/n7Ptqht.png" alt="Especialista" width={700} height={400} className="rounded-lg shadow-md" />
 
       <p className="text-muted-foreground max-w-2xl">
-        Camila Nakamoto é referência quando o assunto é menopausa e emagrecimento feminino. Depois de viver anos na Ásia, onde descobriu como o Pilates Ásiatico transformava a vida das mulheres, ela trouxe essa prática para o Brasil. E hoje ela vai ajudar você!
+      Camila Nakamoto é referência quando o assunto é <b>menopausa e emagrecimento feminino</b>. Depois de viver anos na Ásia, onde descobriu como o <b>Pilates Ásiatico</b> transformava a vida das mulheres, ela trouxe essa prática para o Brasil. E hoje ela vai ajudar <b>você!</b>
       </p>
 
-      <h3 className="text-xl md:text-3xl font-bold text-destructive pt-4">🚨 VOCÊ VAI TOMAR A DECISÃO CERTA?</h3>
+      <h3 className="text-xl md:text-3xl font-bold text-destructive pt-4">🚨 VOCÊ VAI TOMAR A <span className="text-destructive">DECISÃO CERTA?</span></h3>
       
       <p className="text-lg font-semibold max-w-2xl">
         O tempo não perdoa. Cada semana parada é mais gordura acumulada na barriga da menopausa, mais sintomas te consumindo e mais autoestima indo pro chão.
