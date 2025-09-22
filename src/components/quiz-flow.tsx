@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { ArrowLeft, Loader2, Scale, BarChart, Star, AlertTriangle, Briefcase } from 'lucide-react';
+import { ArrowLeft, Loader2, Scale, BarChart, Star, AlertTriangle, Briefcase, Wand } from 'lucide-react';
 import { quizQuestions, type QuizQuestion, type QuizOption } from '@/lib/quiz-questions';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
@@ -23,6 +23,12 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
 
 export default function QuizFlow() {
@@ -255,7 +261,7 @@ export default function QuizFlow() {
       <p className="text-xl text-foreground mb-6">
         Quem age agora começa a ver resultados já nos primeiros dias!
       </p>
-      <Button onClick={handleInfoScreenContinue} size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
+      <Button onClick={handleInfoScreenContinue} size="lg" className="w-full bg-[#E5398D] hover_bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
         Continuar
       </Button>
     </div>
@@ -516,6 +522,62 @@ const renderWarningScreen2 = () => (
     </div>
   );
 
+  const FaqAndGuarantee = () => (
+    <div className="w-full max-w-3xl text-center flex flex-col items-center gap-8 mt-16">
+        <h3 className="text-2xl md:text-3xl font-bold flex items-center gap-2">
+            <Wand /> PERGUNTAS FREQUENTES
+        </h3>
+        <Accordion type="single" collapsible className="w-full">
+            <AccordionItem value="item-1">
+                <AccordionTrigger>Em quanto tempo vou ver resultados?</AccordionTrigger>
+                <AccordionContent>
+                    Muitas alunas relatam sentir mais disposição e bem-estar já nos primeiros dias. Para resultados visíveis de perda de peso e tonificação, a maioria começa a ver diferenças significativas em 2 a 4 semanas.
+                </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-2">
+                <AccordionTrigger>Preciso de equipamentos ou academia?</AccordionTrigger>
+                <AccordionContent>
+                    Não! O Pilates Asiático foi pensado para ser feito no conforto da sua casa, usando apenas o peso do seu corpo. Você não precisa de nenhum equipamento.
+                </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-3">
+                <AccordionTrigger>Funciona para qualquer idade?</AccordionTrigger>
+                <AccordionContent>
+                    Sim! O método é especialmente eficaz para mulheres acima dos 40 anos, passando pela menopausa, mas pode ser adaptado e beneficiar mulheres de todas as idades.
+                </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-4">
+                <AccordionTrigger>E se eu não conseguir fazer sozinha?</AccordionTrigger>
+                <AccordionContent>
+                    Não se preocupe! As aulas são muito didáticas e fáceis de seguir. Além disso, você terá acesso ao nosso grupo de suporte para tirar dúvidas e receber apoio.
+                </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-5">
+                <AccordionTrigger>Como vou receber o material?</AccordionTrigger>
+                <AccordionContent>
+                    Assim que seu pagamento for confirmado, você receberá um e-mail com todas as instruções e o link para acessar a plataforma com todo o conteúdo imediatamente.
+                </AccordionContent>
+            </AccordionItem>
+        </Accordion>
+
+        <div className="mt-8 border-t-2 border-dashed w-full pt-8">
+            <h3 className="text-2xl md:text-3xl font-bold text-destructive">GARANTIA INCONDICIONAL DE 30 DIAS!</h3>
+            <p className="text-lg mt-4 max-w-2xl mx-auto">
+                Se após seguir o plano você não sentir diferença no corpo, disposição e sintomas da menopausa, devolvemos 100% do seu investimento. Sem burocracia. Sem letrinhas pequenas. <strong>Você só tem a ganhar.</strong>
+            </p>
+            <a href="#checkout-section" className="inline-block mt-6">
+                <Button size="lg" className="bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
+                    Quero começar hoje mesmo!
+                </Button>
+            </a>
+            <div className="flex justify-center items-center gap-4 mt-8">
+                <Image src="https://i.imgur.com/EziFGRA.png" alt="Selo de Garantia 30 dias" width={150} height={150} />
+                <Image src="https://i.imgur.com/VbvDRPC.jpeg" alt="Logo Wase Pilates" width={150} height={150} className="rounded-2xl" />
+            </div>
+        </div>
+    </div>
+);
+
   const renderSalesPage = () => (
     <div className="w-full max-w-3xl text-center animate-in fade-in duration-500 flex flex-col items-center gap-8">
       <h2 className="text-2xl md:text-4xl font-bold uppercase">
@@ -585,6 +647,8 @@ const renderWarningScreen2 = () => (
       <div id="checkout-section">
         <TransparentCheckout />
       </div>
+
+      <FaqAndGuarantee />
     </div>
   );
 
