@@ -615,6 +615,12 @@ const renderWarningScreen2 = () => (
             <CarouselItem>
               <Image src="https://i.imgur.com/7c8oe8U.png" alt="Depoimento 3" width={700} height={150} className="rounded-lg shadow-md object-contain" />
             </CarouselItem>
+             <CarouselItem>
+              <Image src="https://i.imgur.com/nrVOzqf.png" alt="Depoimento 4" width={700} height={150} className="rounded-lg shadow-md object-contain" />
+            </CarouselItem>
+             <CarouselItem>
+              <Image src="https://i.imgur.com/SPhIXEU.png" alt="Depoimento 5" width={700} height={150} className="rounded-lg shadow-md object-contain" />
+            </CarouselItem>
           </CarouselContent>
           <CarouselPrevious />
           <CarouselNext />
