@@ -139,15 +139,22 @@ export default function TransparentCheckout() {
         </div>
 
         <div className="mt-6 bg-gray-800 text-white rounded-lg p-4">
-          <h3 className="font-bold">Após a confirmação você recebe:</h3>
+          <h3 className="font-bold">Após o pagamento você recebe:</h3>
           <ul className="mt-2 space-y-2 text-sm">
             <li className="flex items-center gap-2">
-              <Heart className="h-4 w-4 text-green-400" />
-              <span>Aulas exclusivas</span>
+              <span>📘 Plano Personalizado</span>
             </li>
             <li className="flex items-center gap-2">
-              <Flame className="h-4 w-4 text-green-400" />
-              <span>Conteúdo personalizado</span>
+              <span>🎁 4 Bônus Exclusivos</span>
+            </li>
+            <li className="flex items-center gap-2">
+              <span>📅 Cronograma de 30 dias</span>
+            </li>
+             <li className="flex items-center gap-2">
+              <span>⚡️ Acesso Instantâneo</span>
+            </li>
+             <li className="flex items-center gap-2">
+              <span>🛡️ Garantia de 30 dias</span>
             </li>
           </ul>
         </div>
@@ -201,3 +208,4 @@ export default function TransparentCheckout() {
     </>
   );
 }
+    
