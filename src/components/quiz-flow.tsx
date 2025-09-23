@@ -543,7 +543,7 @@ const renderWarningScreen2 = () => (
             <AccordionItem value="item-3">
                 <AccordionTrigger>Funciona para qualquer idade?</AccordionTrigger>
                 <AccordionContent>
-                    O Pilates Asiática foi desenvolvido exclusivamente para mulheres em menopausa e pré-menopausa (entre 38 e 65 anos, em média).
+                    O Pilates Asiática foi desenvolvido exclusively para mulheres em menopausa e pré-menopausa (entre 38 e 65 anos, em média).
                 </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-4">
@@ -577,6 +577,33 @@ const renderWarningScreen2 = () => (
         </div>
     </div>
 );
+
+const CountdownTimer = () => {
+  const [timeLeft, setTimeLeft] = useState(5 * 60 + 50); // 5 minutes 50 seconds
+
+  useEffect(() => {
+    if (timeLeft <= 0) return;
+
+    const intervalId = setInterval(() => {
+      setTimeLeft(timeLeft - 1);
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [timeLeft]);
+
+  const minutes = Math.floor(timeLeft / 60);
+  const seconds = timeLeft % 60;
+
+  return (
+    <div className="bg-red-100 border border-red-200 text-gray-800 p-4 rounded-lg flex items-center justify-center gap-2 mt-4">
+      <AlertTriangle className="h-6 w-6 text-yellow-500" />
+      <p className="text-center">
+        Você só tem <span className="font-bold text-red-600">{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}</span> se o tempo zerar, você perde os 4 bônus grátis.
+      </p>
+    </div>
+  );
+};
+
 
   const renderSalesPage = () => (
     <div className="w-full max-w-3xl text-center animate-in fade-in duration-500 flex flex-col items-center gap-8">
@@ -642,8 +669,10 @@ const renderWarningScreen2 = () => (
       👉 Ou você age agora, ou aceita continuar perdendo sua energia e juventude. A escolha é sua!
       </p>
 
-      <Image src="https://i.imgur.com/uQuqLc8.png" alt="Transformação corporal" width={700} height={400} className="rounded-lg shadow-md" />
+      <Image src="https://i.imgur.com/ANXAbjN.png" alt="Transformação corporal" width={700} height={400} className="rounded-lg shadow-md" />
       
+      <CountdownTimer />
+
       <a href="#checkout-section" className="w-full">
         <Button asChild size="lg" className="w-full bg-[#E5398D] hover:bg-[#c22a7a] text-white rounded-full px-10 py-6 text-lg font-bold shadow-lg transform hover:scale-105 transition-transform">
           <span>Quero tomar a decisão certa!</span>
