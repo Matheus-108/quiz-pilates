@@ -531,31 +531,31 @@ const renderWarningScreen2 = () => (
             <AccordionItem value="item-1">
                 <AccordionTrigger>Em quanto tempo vou ver resultados?</AccordionTrigger>
                 <AccordionContent>
-                    Muitas alunas relatam sentir mais disposição e bem-estar já nos primeiros dias. Para resultados visíveis de perda de peso e tonificação, a maioria começa a ver diferenças significativas em 2 a 4 semanas.
+                    Muitas mulheres relatam melhora já nos primeiros 3 dias. Em algumas semanas, a diferença na barriga, energia e sono é nítida.
                 </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-2">
                 <AccordionTrigger>Preciso de equipamentos ou academia?</AccordionTrigger>
                 <AccordionContent>
-                    Não! O Pilates Asiático foi pensado para ser feito no conforto da sua casa, usando apenas o peso do seu corpo. Você não precisa de nenhum equipamento.
+                    Não. O método foi criado para ser feito em casa, até mesmo assistindo novela na sala!
                 </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-3">
                 <AccordionTrigger>Funciona para qualquer idade?</AccordionTrigger>
                 <AccordionContent>
-                    Sim! O método é especialmente eficaz para mulheres acima dos 40 anos, passando pela menopausa, mas pode ser adaptado e beneficiar mulheres de todas as idades.
+                    O Pilates Asiática foi desenvolvido exclusivamente para mulheres em menopausa e pré-menopausa (entre 38 e 65 anos, em média).
                 </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-4">
                 <AccordionTrigger>E se eu não conseguir fazer sozinha?</AccordionTrigger>
                 <AccordionContent>
-                    Não se preocupe! As aulas são muito didáticas e fáceis de seguir. Além disso, você terá acesso ao nosso grupo de suporte para tirar dúvidas e receber apoio.
+                    Os treinos são simples, guiados e adaptados, podendo ser feitos até deitada no sofá ou na cama.
                 </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-5">
                 <AccordionTrigger>Como vou receber o material?</AccordionTrigger>
                 <AccordionContent>
-                    Assim que seu pagamento for confirmado, você receberá um e-mail com todas as instruções e o link para acessar a plataforma com todo o conteúdo imediatamente.
+                    Assim que você finalizar a compra, vai receber instantaneamente um e-mail com acesso ao material completo e todos os bônus.
                 </AccordionContent>
             </AccordionItem>
         </Accordion>
